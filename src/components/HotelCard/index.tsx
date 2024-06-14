@@ -118,7 +118,7 @@ export default function HotelCard({
     type,
 }: IHotelCard) {
     return (
-        <div className="cy-hotelcard flex w-full flex-col items-center justify-between gap-2.5 rounded-2xl bg-white p-2.5 md:flex-row">
+        <div className="cy-hotelcard flex w-full flex-col items-center justify-between gap-2.5 rounded-2xl bg-white p-2.5 shadow-md md:flex-row">
             {isLoading ? (
                 <>
                     <HotelCardImage />

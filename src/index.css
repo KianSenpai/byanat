@@ -6,11 +6,9 @@
 
 :root {
     font-family: GilInter, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-
     color-scheme: light dark;
     background-color: #242424;
     color: #3E4958;
-
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -19,8 +17,11 @@
 
 body {
     margin: 0;
-    display: flex;
-    place-items: center;
-    min-width: 320px;
-    min-height: 100vh;
+    height: 100%;
+    overflow: auto;
+}
+
+html {
+    overflow: hidden;
+    height: 100%;
 }
