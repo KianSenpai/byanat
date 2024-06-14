@@ -1,3 +1,5 @@
+@import url('primereact/resources/themes/viva-light/theme.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,6 +9,7 @@
 
     color-scheme: light dark;
     background-color: #242424;
+    color: #3E4958;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
