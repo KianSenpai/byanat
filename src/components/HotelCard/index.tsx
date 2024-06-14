@@ -1,5 +1,4 @@
 import { Skeleton } from 'primereact/skeleton'
-import { Divider } from 'primereact/divider'
 
 interface IHotelCard {
     isLoading: boolean
@@ -94,13 +93,13 @@ export default function HotelCard({
     type,
 }: IHotelCard) {
     return (
-        <div className="flex w-full items-center justify-between gap-2.5 rounded-2xl bg-white p-2.5">
+        <div className="flex w-full flex-col items-center justify-between gap-2.5 rounded-2xl bg-white p-2.5 md:flex-row">
             {isLoading ? (
                 <>
-                    <div className="h-40 w-1/2 overflow-hidden rounded-2xl">
+                    <div className="h-40 w-full overflow-hidden rounded-2xl md:w-1/2">
                         <Skeleton width="100%" height="100%" />
                     </div>
-                    <div className="flex w-1/2 flex-col gap-3.5 p-2.5">
+                    <div className="flex w-full flex-col gap-3.5 p-2.5 md:w-1/2">
                         <Skeleton width="100%" height="24px" />
                         <div className="flex gap-5">
                             <Skeleton width="48px" height="24px" />
@@ -123,7 +122,7 @@ export default function HotelCard({
                 </>
             ) : (
                 <>
-                    <div className="h-40 w-1/2 overflow-hidden rounded-2xl">
+                    <div className="h-40 w-full overflow-hidden rounded-2xl md:w-1/2">
                         {image ? (
                             <img
                                 src={image}
@@ -134,13 +133,13 @@ export default function HotelCard({
                             <Skeleton width="100%" height="100%" />
                         )}
                     </div>
-                    <div className="flex w-1/2 flex-col gap-3.5 p-2.5 text-sm font-light">
+                    <div className="flex w-full flex-col gap-3.5 p-2.5 text-sm font-light md:w-1/2">
                         {title && (
                             <span className="text-lg font-extrabold">
                                 {title}
                             </span>
                         )}
-                        <div className="flex items-center gap-2.5">
+                        <div className="flex items-center gap-5">
                             {rating && (
                                 <div className="flex items-center gap-1">
                                     <svg
@@ -162,21 +161,15 @@ export default function HotelCard({
                         </div>
                         <div className="flex gap-1">
                             {guest && (
-                                <div className="flex gap-1">
-                                    <span>
-                                        {guest} guest{guest > 1 ? 's' : ''}
-                                    </span>
-                                    <Divider layout="vertical" />
-                                </div>
+                                <span>
+                                    {guest} guest{guest > 1 ? 's' : ''} |
+                                </span>
                             )}
                             {bedroom && (
-                                <div className="flex gap-1">
-                                    <span>
-                                        {bedroom} bedroom
-                                        {bedroom > 1 ? 's' : ''}
-                                    </span>
-                                    <Divider layout="vertical" />
-                                </div>
+                                <span>
+                                    {bedroom} bedroom
+                                    {bedroom > 1 ? 's' : ''} |
+                                </span>
                             )}
                             {bathroom && (
                                 <span>
@@ -186,7 +179,7 @@ export default function HotelCard({
                             )}
                         </div>
                         {type && (
-                            <div className="flex gap-2.5">
+                            <div className="flex items-center gap-2.5">
                                 {getTypeIcon(type)}
                                 <span>{type}</span>
                             </div>
