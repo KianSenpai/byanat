@@ -25,3 +25,18 @@ html {
     overflow: hidden;
     height: 100%;
 }
+
+.p-dropdown {
+    display: flex;
+    align-items: center;
+}
+
+.p-dropdown-label {
+    font-size: 14px;
+    height: fit-content;
+}
+
+.p-dropdown-items-wrapper {
+    font-size: 14px;
+    border-radius: 0 0 10px 10px;
+}
