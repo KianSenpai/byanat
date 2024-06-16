@@ -157,3 +157,46 @@ export const ChevronIcon = () => (
         />
     </svg>
 )
+
+export const HandleIcon = () => (
+    <svg
+        width="18"
+        height="18"
+        viewBox="0 0 18 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <path
+            d="M8.1529 12.1306H3.71796"
+            stroke="#92959E"
+            stroke-width="1.05582"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+        <path
+            d="M10.131 5.30829H14.566"
+            stroke="#92959E"
+            stroke-width="1.05582"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+        <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M7.02394 5.27013C7.02394 4.35815 6.27912 3.61865 5.36057 3.61865C4.44202 3.61865 3.6972 4.35815 3.6972 5.27013C3.6972 6.18211 4.44202 6.92161 5.36057 6.92161C6.27912 6.92161 7.02394 6.18211 7.02394 5.27013Z"
+            stroke="#92959E"
+            stroke-width="1.05582"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+        <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M14.9592 12.1031C14.9592 11.1912 14.215 10.4517 13.2964 10.4517C12.3773 10.4517 11.6325 11.1912 11.6325 12.1031C11.6325 13.0151 12.3773 13.7546 13.2964 13.7546C14.215 13.7546 14.9592 13.0151 14.9592 12.1031Z"
+            stroke="#92959E"
+            stroke-width="1.05582"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+    </svg>
+)

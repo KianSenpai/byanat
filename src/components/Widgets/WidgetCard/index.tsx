@@ -2,12 +2,15 @@ import type { Identifier, XYCoord } from 'dnd-core'
 import { ReactNode, useRef, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { ResizableBox } from 'react-resizable'
-import 'react-resizable/css/styles.css' // Import resizable styles
+import 'react-resizable/css/styles.css'
+import { HandleIcon } from '../../../assets/icons.tsx'
 
-export interface CardProps {
-    id: any
+interface IWidgetCard {
+    id: number
     children: ReactNode
     index: number
+    title?: string
+    subtitle?: string
     moveCard: (dragIndex: number, hoverIndex: number) => void
 }
 
@@ -22,7 +25,9 @@ export default function WidgetCard({
     index,
     moveCard,
     children,
-}: CardProps) {
+    title,
+    subtitle,
+}: IWidgetCard) {
     const ref = useRef<HTMLDivElement>(null)
     const handleRef = useRef<HTMLDivElement>(null)
 
@@ -102,15 +107,6 @@ export default function WidgetCard({
     drop(ref)
     drag(handleRef)
 
-    const handleStyle = {
-        backgroundColor: 'green',
-        width: '1rem',
-        height: '1rem',
-        display: 'inline-block',
-        marginRight: '0.75rem',
-        cursor: 'move',
-    }
-
     const [width, setWidth] = useState(200)
     const [height, setHeight] = useState(100)
 
@@ -125,7 +121,7 @@ export default function WidgetCard({
         <div
             ref={ref}
             style={{ opacity }}
-            className="w-fit rounded-2xl bg-white p-2.5 shadow-md"
+            className="w-fit rounded-2xl bg-white px-7 py-6 shadow-md"
             data-handler-id={handlerId}
         >
             <ResizableBox
@@ -136,8 +132,24 @@ export default function WidgetCard({
                 maxConstraints={[500, 300]}
                 draggableOpts={{ enableUserSelectHack: false }}
             >
-                <div ref={handleRef} style={handleStyle} />
-                {children}
+                <div className="flex flex-col">
+                    <div className="mb-5">
+                        <div className="flex items-center justify-between">
+                            <span className="font-bold">
+                                {title ? title : ''}
+                            </span>
+                            <div ref={handleRef} className="cursor-move">
+                                <HandleIcon />
+                            </div>
+                        </div>
+                        {subtitle && (
+                            <span className="text-xs text-slate-400">
+                                {subtitle}
+                            </span>
+                        )}
+                    </div>
+                    {children}
+                </div>
             </ResizableBox>
         </div>
     )

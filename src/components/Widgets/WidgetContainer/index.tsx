@@ -1,41 +1,31 @@
 import update from 'immutability-helper'
-import { useCallback, useState } from 'react'
+import { ReactNode, useCallback, useState } from 'react'
 import WidgetCard from '../WidgetCard'
 
-export interface Item {
+interface Item {
     id: number
-    text: string
+    body: ReactNode
+    title?: string
+    subtitle?: string
 }
 
 export default function WidgetContainer() {
-    const [cards, setCards] = useState([
+    const [cards, setCards] = useState<Item[]>([
         {
             id: 1,
-            text: 'Write a cool JS library',
+            body: <div>hello</div>,
+            title: 'P&L',
+            subtitle: 'Total profit growth of 25%',
         },
         {
             id: 2,
-            text: 'Make it generic enough',
+            body: <div>hello</div>,
+            title: 'Current Plan',
+            subtitle: 'Information and usages of your current plan',
         },
         {
             id: 3,
-            text: 'Write README',
-        },
-        {
-            id: 4,
-            text: 'Create some examples',
-        },
-        {
-            id: 5,
-            text: 'Spam in Twitter and IRC to promote it (note that this element is taller than the others)',
-        },
-        {
-            id: 6,
-            text: '???',
-        },
-        {
-            id: 7,
-            text: 'PROFIT',
+            body: <div>hello</div>,
         },
     ])
 
@@ -50,24 +40,23 @@ export default function WidgetContainer() {
         )
     }, [])
 
-    const renderCard = useCallback(
-        (card: { id: number; text: string }, index: number) => {
-            return (
-                <WidgetCard
-                    key={card.id}
-                    index={index}
-                    id={card.id}
-                    moveCard={moveCard}
-                >
-                    {card.text}
-                </WidgetCard>
-            )
-        },
-        []
-    )
+    const renderCard = useCallback((card: Item, index: number) => {
+        return (
+            <WidgetCard
+                key={card.id}
+                index={index}
+                id={card.id}
+                moveCard={moveCard}
+                title={card.title}
+                subtitle={card.subtitle}
+            >
+                {card.body}
+            </WidgetCard>
+        )
+    }, [])
 
     return (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-5">
             {cards.map((card, i) => renderCard(card, i))}
         </div>
     )
