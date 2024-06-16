@@ -1,6 +1,8 @@
 import type { Identifier, XYCoord } from 'dnd-core'
-import { ReactNode, useRef } from 'react'
+import { ReactNode, useRef, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
+import { ResizableBox } from 'react-resizable'
+import 'react-resizable/css/styles.css' // Import resizable styles
 
 export interface CardProps {
     id: any
@@ -22,6 +24,8 @@ export default function WidgetCard({
     children,
 }: CardProps) {
     const ref = useRef<HTMLDivElement>(null)
+    const handleRef = useRef<HTMLDivElement>(null)
+
     const [{ handlerId }, drop] = useDrop<
         DragItem,
         void,
@@ -94,17 +98,47 @@ export default function WidgetCard({
         }),
     })
 
-    const opacity = isDragging ? 0 : 1
-    drag(drop(ref))
+    const opacity = isDragging ? 0.4 : 1
+    drop(ref)
+    drag(handleRef)
+
+    const handleStyle = {
+        backgroundColor: 'green',
+        width: '1rem',
+        height: '1rem',
+        display: 'inline-block',
+        marginRight: '0.75rem',
+        cursor: 'move',
+    }
+
+    const [width, setWidth] = useState(200)
+    const [height, setHeight] = useState(100)
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    const onResize = (e, { size }) => {
+        setWidth(size.width)
+        setHeight(size.height)
+    }
 
     return (
         <div
             ref={ref}
             style={{ opacity }}
-            className="w-full rounded-2xl bg-white p-2.5 shadow-md"
+            className="w-fit rounded-2xl bg-white p-2.5 shadow-md"
             data-handler-id={handlerId}
         >
-            {children}
+            <ResizableBox
+                width={width}
+                height={height}
+                onResize={onResize}
+                minConstraints={[150, 50]}
+                maxConstraints={[500, 300]}
+                draggableOpts={{ enableUserSelectHack: false }}
+            >
+                <div ref={handleRef} style={handleStyle} />
+                {children}
+            </ResizableBox>
         </div>
     )
 }

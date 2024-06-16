@@ -50,18 +50,21 @@ export default function WidgetContainer() {
         )
     }, [])
 
-    const renderCard = useCallback((card: { id: number }, index: number) => {
-        return (
-            <WidgetCard
-                key={card.id}
-                index={index}
-                id={card.id}
-                moveCard={moveCard}
-            >
-                hi
-            </WidgetCard>
-        )
-    }, [])
+    const renderCard = useCallback(
+        (card: { id: number; text: string }, index: number) => {
+            return (
+                <WidgetCard
+                    key={card.id}
+                    index={index}
+                    id={card.id}
+                    moveCard={moveCard}
+                >
+                    {card.text}
+                </WidgetCard>
+            )
+        },
+        []
+    )
 
     return (
         <div className="flex flex-col gap-3">
