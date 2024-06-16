@@ -1,6 +1,7 @@
 import HotelCard from './components/HotelCard'
 import Header from './components/Header'
 import Container from './components/Container'
+import WidgetContainer from './components/Widgets/WidgetContainer'
 
 export default function App() {
     return (
@@ -40,6 +41,7 @@ export default function App() {
                             price="10$"
                         />
                     </div>
+                    <WidgetContainer />
                 </div>
             </Container>
         </>
