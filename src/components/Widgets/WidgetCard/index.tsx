@@ -1,18 +1,10 @@
 import type { Identifier, XYCoord } from 'dnd-core'
-import { useRef } from 'react'
+import { ReactNode, useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
-
-const style = {
-    border: '1px dashed gray',
-    padding: '0.5rem 1rem',
-    marginBottom: '.5rem',
-    backgroundColor: 'white',
-    cursor: 'move',
-}
 
 export interface CardProps {
     id: any
-    text: string
+    children: ReactNode
     index: number
     moveCard: (dragIndex: number, hoverIndex: number) => void
 }
@@ -23,7 +15,12 @@ interface DragItem {
     type: string
 }
 
-export default function WidgetCard({ id, text, index, moveCard }: CardProps) {
+export default function WidgetCard({
+    id,
+    index,
+    moveCard,
+    children,
+}: CardProps) {
     const ref = useRef<HTMLDivElement>(null)
     const [{ handlerId }, drop] = useDrop<
         DragItem,
@@ -99,13 +96,15 @@ export default function WidgetCard({ id, text, index, moveCard }: CardProps) {
 
     const opacity = isDragging ? 0 : 1
     drag(drop(ref))
+
     return (
         <div
             ref={ref}
-            style={{ ...style, opacity }}
+            style={{ opacity }}
+            className="w-full rounded-2xl bg-white p-2.5 shadow-md"
             data-handler-id={handlerId}
         >
-            {text}
+            {children}
         </div>
     )
 }
