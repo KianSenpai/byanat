@@ -9,25 +9,27 @@ interface Item {
     subtitle?: string
 }
 
+const initialCards: Item[] = [
+    {
+        id: 1,
+        body: <div>hello</div>,
+        title: 'P&L',
+        subtitle: 'Total profit growth of 25%',
+    },
+    {
+        id: 2,
+        body: <div>hello</div>,
+        title: 'Current Plan',
+        subtitle: 'Information and usages of your current plan',
+    },
+    {
+        id: 3,
+        body: <div>hello</div>,
+    },
+]
+
 export default function WidgetContainer() {
-    const [cards, setCards] = useState<Item[]>([
-        {
-            id: 1,
-            body: <div>hello</div>,
-            title: 'P&L',
-            subtitle: 'Total profit growth of 25%',
-        },
-        {
-            id: 2,
-            body: <div>hello</div>,
-            title: 'Current Plan',
-            subtitle: 'Information and usages of your current plan',
-        },
-        {
-            id: 3,
-            body: <div>hello</div>,
-        },
-    ])
+    const [cards, setCards] = useState<Item[]>(initialCards)
 
     const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
         setCards((prevCards: Item[]) =>

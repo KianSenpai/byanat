@@ -1,5 +1,5 @@
 import type { Identifier, XYCoord } from 'dnd-core'
-import { ReactNode, useRef, useState } from 'react'
+import { ReactNode, useRef, useState, CSSProperties } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { ResizableBox } from 'react-resizable'
 import 'react-resizable/css/styles.css'
@@ -16,7 +16,7 @@ interface IWidgetCard {
 
 interface DragItem {
     index: number
-    id: string
+    id: number
     type: string
 }
 
@@ -37,84 +37,55 @@ export default function WidgetCard({
         { handlerId: Identifier | null }
     >({
         accept: 'card',
-        collect(monitor) {
-            return {
-                handlerId: monitor.getHandlerId(),
-            }
-        },
-        hover(item: DragItem, monitor) {
-            if (!ref.current) {
-                return
-            }
+        collect: (monitor) => ({
+            handlerId: monitor.getHandlerId(),
+        }),
+        hover: (item, monitor) => {
+            if (!ref.current) return
+
             const dragIndex = item.index
             const hoverIndex = index
 
-            // Don't replace items with themselves
-            if (dragIndex === hoverIndex) {
-                return
-            }
+            if (dragIndex === hoverIndex) return
 
-            // Determine rectangle on screen
-            const hoverBoundingRect = ref.current?.getBoundingClientRect()
-
-            // Get vertical middle
+            const hoverBoundingRect = ref.current.getBoundingClientRect()
             const hoverMiddleY =
                 (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-
-            // Determine mouse position
             const clientOffset = monitor.getClientOffset()
-
-            // Get pixels to the top
             const hoverClientY =
                 (clientOffset as XYCoord).y - hoverBoundingRect.top
 
-            // Only perform the move when the mouse has crossed half of the items height
-            // When dragging downwards, only move when the cursor is below 50%
-            // When dragging upwards, only move when the cursor is above 50%
-
-            // Dragging downwards
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+            if (
+                (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) ||
+                (dragIndex > hoverIndex && hoverClientY > hoverMiddleY)
+            ) {
                 return
             }
 
-            // Dragging upwards
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-                return
-            }
-
-            // Time to actually perform the action
             moveCard(dragIndex, hoverIndex)
-
-            // Note: we're mutating the monitor item here!
-            // Generally it's better to avoid mutations,
-            // but it's good here for the sake of performance
-            // to avoid expensive index searches.
             item.index = hoverIndex
         },
     })
 
     const [{ isDragging }, drag] = useDrag({
         type: 'card',
-        item: () => {
-            return { id, index }
-        },
-        collect: (monitor: any) => ({
+        item: () => ({ id, index }),
+        collect: (monitor) => ({
             isDragging: monitor.isDragging(),
         }),
     })
 
-    const opacity = isDragging ? 0.4 : 1
+    const opacity: CSSProperties['opacity'] = isDragging ? 0.4 : 1
     drop(ref)
     drag(handleRef)
 
-    const [width, setWidth] = useState(200)
-    const [height, setHeight] = useState(100)
+    const [dimensions, setDimensions] = useState({ width: 200, height: 100 })
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    const onResize = (e, { size }) => {
-        setWidth(size.width)
-        setHeight(size.height)
+    const onResize = (
+        _: unknown,
+        { size }: { size: { width: number; height: number } }
+    ) => {
+        setDimensions({ width: size.width, height: size.height })
     }
 
     return (
@@ -125,8 +96,8 @@ export default function WidgetCard({
             data-handler-id={handlerId}
         >
             <ResizableBox
-                width={width}
-                height={height}
+                width={dimensions.width}
+                height={dimensions.height}
                 onResize={onResize}
                 minConstraints={[150, 50]}
                 maxConstraints={[500, 300]}
@@ -135,9 +106,7 @@ export default function WidgetCard({
                 <div className="flex flex-col">
                     <div className="mb-5">
                         <div className="flex items-center justify-between">
-                            <span className="font-bold">
-                                {title ? title : ''}
-                            </span>
+                            <span className="font-bold">{title || ''}</span>
                             <div ref={handleRef} className="cursor-move">
                                 <HandleIcon />
                             </div>

@@ -9,6 +9,7 @@ import { SearchIcon } from '../../../assets/icons.tsx'
 
 const DropdownSection = () => {
     const [selectedFilter, setSelectedFilter] = useState(null)
+
     const groupedFilters = [
         {
             label: 'Type',
@@ -27,28 +28,18 @@ const DropdownSection = () => {
         {
             label: 'Rating',
             items: [
-                {
-                    label: 'Less than 3',
-                    value: 'Less than 3',
-                },
+                { label: 'Less than 3', value: 'Less than 3' },
                 { label: 'Between 3 and 4', value: 'Between 3 and 4' },
-                {
-                    label: 'More then 4',
-                    value: 'More then 4',
-                },
+                { label: 'More than 4', value: 'More than 4' }, // Fixed typo from "then" to "than"
             ],
         },
     ]
-    const groupedItemTemplate = (option: {
-        label: string
-        items: { label: string; value: string }[]
-    }) => {
-        return (
-            <div className="align-items-center flex">
-                <div>{option.label}</div>
-            </div>
-        )
-    }
+
+    const groupedItemTemplate = (option: { label: string }) => (
+        <div className="align-items-center flex">
+            <div>{option.label}</div>
+        </div>
+    )
 
     return (
         <Dropdown
@@ -69,10 +60,11 @@ interface Country {
 }
 
 const SearchSection = () => {
-    const countries = [
+    const countries: Country[] = [
         { name: 'Los Angeles', code: '' },
         { name: 'Muscat', code: '' },
     ]
+
     const [selectedCountries, setSelectedCountries] = useState<
         Country | undefined
     >(undefined)
@@ -81,16 +73,14 @@ const SearchSection = () => {
     >(undefined)
 
     const search = (event: AutoCompleteCompleteEvent) => {
-        let _filteredCountries
+        let _filteredCountries: Country[]
 
         if (!event.query.trim().length) {
             _filteredCountries = [...countries]
         } else {
-            _filteredCountries = countries.filter((country) => {
-                return country.name
-                    .toLowerCase()
-                    .includes(event.query.toLowerCase())
-            })
+            _filteredCountries = countries.filter((country) =>
+                country.name.toLowerCase().includes(event.query.toLowerCase())
+            )
         }
 
         setFilteredCountries(_filteredCountries)
