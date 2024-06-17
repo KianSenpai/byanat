@@ -41,6 +41,7 @@ export default function App() {
                             price="10$"
                         />
                     </div>
+                    <div className="col-span-2"></div>
                     <WidgetContainer />
                 </div>
             </Container>

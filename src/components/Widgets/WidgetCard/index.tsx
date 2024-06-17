@@ -89,19 +89,19 @@ export default function WidgetCard({
     }
 
     return (
-        <div
-            ref={ref}
-            style={{ opacity }}
-            className="w-fit rounded-2xl bg-white px-7 py-6 shadow-md"
-            data-handler-id={handlerId}
+        <ResizableBox
+            width={dimensions.width}
+            height={dimensions.height}
+            onResize={onResize}
+            minConstraints={[150, 50]}
+            maxConstraints={[500, 300]}
+            draggableOpts={{ grid: [25, 25] }}
         >
-            <ResizableBox
-                width={dimensions.width}
-                height={dimensions.height}
-                onResize={onResize}
-                minConstraints={[150, 50]}
-                maxConstraints={[500, 300]}
-                draggableOpts={{ enableUserSelectHack: false }}
+            <div
+                ref={ref}
+                style={{ opacity }}
+                className="h-full w-full rounded-2xl bg-white px-7 py-6 shadow-md"
+                data-handler-id={handlerId}
             >
                 <div className="flex flex-col">
                     <div className="mb-5">
@@ -119,7 +119,7 @@ export default function WidgetCard({
                     </div>
                     {children}
                 </div>
-            </ResizableBox>
-        </div>
+            </div>
+        </ResizableBox>
     )
 }
