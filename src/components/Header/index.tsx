@@ -5,7 +5,7 @@ import Profile from './Profile'
 
 export default function Header() {
     return (
-        <Container className="sticky top-0 bg-white px-36 py-5 shadow-md">
+        <Container className="sticky top-0 z-50 bg-white px-36 py-5 shadow-md">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-7">
                     <Logo />

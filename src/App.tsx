@@ -6,11 +6,11 @@ import Results from './components/Results'
 
 export default function App() {
     return (
-        <>
+        <div className="h-screen w-screen overflow-hidden bg-slate-50">
             <Header />
-            <Container className="bg-slate-50 px-8 py-6">
-                <div className="grid grid-cols-5">
-                    <div className="col-span-2 flex flex-col gap-4">
+            <Container className="px-8 py-6">
+                <div className="grid max-h-full w-full grid-cols-5 gap-8">
+                    <div className="col-span-2 max-h-full">
                         <Results />
                     </div>
                     <div className="col-span-2">
@@ -19,6 +19,6 @@ export default function App() {
                     <WidgetContainer />
                 </div>
             </Container>
-        </>
+        </div>
     )
 }

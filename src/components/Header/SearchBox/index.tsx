@@ -6,6 +6,7 @@ import {
 } from 'primereact/autocomplete'
 import { Button } from 'primereact/button'
 import { SearchIcon } from '../../../assets/icons.tsx'
+import { Country } from '../../../assets/types.ts'
 
 const DropdownSection = () => {
     const [selectedFilter, setSelectedFilter] = useState(null)
@@ -30,7 +31,7 @@ const DropdownSection = () => {
             items: [
                 { label: 'Less than 3', value: 'Less than 3' },
                 { label: 'Between 3 and 4', value: 'Between 3 and 4' },
-                { label: 'More than 4', value: 'More than 4' }, // Fixed typo from "then" to "than"
+                { label: 'More than 4', value: 'More than 4' },
             ],
         },
     ]
@@ -54,15 +55,11 @@ const DropdownSection = () => {
     )
 }
 
-interface Country {
-    name: string
-    code: string
-}
-
 const SearchSection = () => {
     const countries: Country[] = [
-        { name: 'Los Angeles', code: '' },
+        { name: 'Dubai', code: '' },
         { name: 'Muscat', code: '' },
+        { name: 'Tehran', code: '' },
     ]
 
     const [selectedCountries, setSelectedCountries] = useState<

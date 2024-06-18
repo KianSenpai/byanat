@@ -11,7 +11,7 @@ interface IHotelCard {
     image?: string
     title?: string
     rating?: number | string
-    price?: string
+    area?: string
     guest?: number
     bedroom?: number
     bathroom?: number
@@ -63,7 +63,7 @@ const HotelCardLoading = () => (
 const HotelCardData = ({
     title,
     rating,
-    price,
+    area,
     guest,
     bedroom,
     bathroom,
@@ -78,7 +78,7 @@ const HotelCardData = ({
                     <span>{rating}</span>
                 </div>
             )}
-            {price && <span>{price}</span>}
+            {area && <span>{area}</span>}
         </div>
         <div className="flex gap-1">
             {guest && (
@@ -111,7 +111,7 @@ export default function HotelCard({
     image,
     title,
     rating,
-    price,
+    area,
     guest,
     bedroom,
     bathroom,
@@ -130,7 +130,7 @@ export default function HotelCard({
                     <HotelCardData
                         title={title}
                         rating={rating}
-                        price={price}
+                        area={area}
                         guest={guest}
                         bedroom={bedroom}
                         bathroom={bathroom}

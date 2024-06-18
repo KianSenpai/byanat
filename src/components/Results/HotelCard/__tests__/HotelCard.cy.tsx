@@ -18,7 +18,7 @@ describe('Checking hotel card', () => {
                 isLoading={false}
                 title={title}
                 rating={rating}
-                price={price}
+                area={price}
                 type={type}
             />
         )

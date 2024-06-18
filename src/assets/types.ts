@@ -27,3 +27,12 @@ export interface GeoJSONResponse {
     type: string
     features: Feature[]
 }
+
+export interface FetchedDataState {
+    fetchedData: GeoJSONResponse | null
+}
+
+export interface Country {
+    name: string
+    code: string
+}

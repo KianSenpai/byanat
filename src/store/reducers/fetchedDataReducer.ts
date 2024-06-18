@@ -3,11 +3,7 @@ import {
     FetchedDataAction,
     SET_FETCHED_DATA,
 } from '../actions/fetchedDataAction'
-import { GeoJSONResponse } from '../../assets/types.ts'
-
-interface FetchedDataState {
-    fetchedData: GeoJSONResponse | null
-}
+import { FetchedDataState } from '../../assets/types.ts'
 
 const initialState: FetchedDataState = {
     fetchedData: null,
