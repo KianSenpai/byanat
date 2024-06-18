@@ -2,6 +2,7 @@ import HotelCard from './components/HotelCard'
 import Header from './components/Header'
 import Container from './components/Container'
 import WidgetContainer from './components/Widgets/WidgetContainer'
+import MapComponent from './components/Map'
 
 export default function App() {
     return (
@@ -41,7 +42,9 @@ export default function App() {
                             price="10$"
                         />
                     </div>
-                    <div className="col-span-2"></div>
+                    <div className="col-span-2">
+                        <MapComponent />
+                    </div>
                     <WidgetContainer />
                 </div>
             </Container>
