@@ -1,5 +1,5 @@
 import HotelCard from '../index.tsx'
-import '../../../index.css'
+import '../../../../index.css'
 
 const title = 'Kian Hotel'
 const rating = 4.7

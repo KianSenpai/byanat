@@ -4,7 +4,7 @@ import {
     EntireStudioApartmentIcon,
     ShareWithSuperHostIcon,
     StarIcon,
-} from '../../assets/icons.tsx'
+} from '../../../assets/icons.tsx'
 
 interface IHotelCard {
     isLoading?: boolean

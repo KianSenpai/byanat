@@ -12,6 +12,7 @@
   "dependencies": {
     "@mapbox/mapbox-gl-geocoder": "^5.0.2",
     "@mapbox/search-js-react": "^1.0.0-beta.21",
+    "@reduxjs/toolkit": "^2.2.5",
     "immutability-helper": "^3.1.1",
     "mapbox-gl": "^3.4.0",
     "primereact": "^10.6.6",
@@ -19,7 +20,9 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
-    "react-resizable": "^3.0.5"
+    "react-redux": "^9.1.2",
+    "react-resizable": "^3.0.5",
+    "redux": "^5.0.1"
   },
   "devDependencies": {
     "@types/mapbox__mapbox-gl-geocoder": "^5.0.0",

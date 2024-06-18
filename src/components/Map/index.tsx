@@ -1,31 +1,13 @@
-import mapboxgl, { Map, GeoJSONSource } from 'mapbox-gl'
+import mapboxgl, { Map } from 'mapbox-gl'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import 'mapbox-gl/dist/mapbox-gl.css'
+import { FeatureProperties, GeoJSONResponse } from '../../assets/types.ts'
+import { useDispatch } from 'react-redux'
+import { setFetchedData } from '../../store/actions/fetchedDataAction.ts'
 
 const accessToken =
     'pk.eyJ1Ijoia2lhYWF3biIsImEiOiJja3Q2MWxjdTQwZTY2MnBqcDNkODZoejJnIn0.X7ayP4QCy30wrYV41LlaOg'
-const tileID = 'kiaaawn.a1a23zgn'
-
-interface FeatureProperties {
-    HOTEL_NAME: string
-    ADDRESS_LINE1: string
-    CITY: string
-    COUNTRY: string
-}
-
-interface Feature {
-    type: string
-    geometry: {
-        type: string
-        coordinates: number[]
-    }
-    properties: FeatureProperties
-}
-
-interface GeoJSONResponse {
-    type: string
-    features: Feature[]
-}
+const tileID = 'kiaaawn.c8xnqxjp'
 
 export default function MapComponent(): JSX.Element {
     const mapContainerRef = useRef<HTMLDivElement | null>(null)
@@ -34,36 +16,45 @@ export default function MapComponent(): JSX.Element {
     const [lat, setLat] = useState<number>(23.58)
     const [zoom, setZoom] = useState<number>(12)
 
-    const fetchData = useCallback(async (center: [number, number]) => {
-        const radius = 10000000 // 1609 meters is roughly equal to one mile
-        const limit = 50 // The maximum amount of results to return
+    const dispatch = useDispatch()
 
-        try {
-            const query = await fetch(
-                `https://api.mapbox.com/v4/${tileID}/tilequery/${center[0]},${center[1]}.json?radius=${radius}&limit=${limit}&access_token=${accessToken}`,
-                { method: 'GET' }
-            )
-            const json: GeoJSONResponse = await query.json()
+    const fetchData = useCallback(
+        async (center: [number, number]) => {
+            const radius = 100000000
+            const limit = 50 // The maximum amount of results to return
 
-            const geoJSON = {
-                type: 'FeatureCollection',
-                features: json.features.map((feature) => ({
-                    type: 'Feature',
-                    geometry: {
-                        type: 'Point',
-                        coordinates: feature.geometry.coordinates,
-                    },
-                    properties: feature.properties,
-                })),
+            try {
+                const query = await fetch(
+                    `https://api.mapbox.com/v4/${tileID}/tilequery/${center[0]},${center[1]}.json?radius=${radius}&limit=${limit}&access_token=${accessToken}`,
+                    { method: 'GET' }
+                )
+                const json: GeoJSONResponse = await query.json()
+
+                const geoJSON = {
+                    type: 'FeatureCollection',
+                    features: json.features.map((feature) => ({
+                        type: 'Feature',
+                        geometry: {
+                            type: 'Point',
+                            coordinates: feature.geometry.coordinates,
+                        },
+                        properties: feature.properties,
+                    })),
+                }
+
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
+                dispatch(setFetchedData(geoJSON))
+
+                if (mapRef.current?.getSource('tilequery')) {
+                    mapRef.current.getSource('tilequery').setData(geoJSON)
+                }
+            } catch (error) {
+                console.error('Error fetching tile query results:', error)
             }
-
-            if (mapRef.current?.getSource('tilequery')) {
-                mapRef.current.getSource('tilequery').setData(geoJSON)
-            }
-        } catch (error) {
-            console.error('Error fetching tile query results:', error)
-        }
-    }, [])
+        },
+        [dispatch]
+    )
 
     const addTileQuerySourceAndLayer = useCallback(() => {
         if (!mapRef.current) return
@@ -145,6 +136,16 @@ export default function MapComponent(): JSX.Element {
             setLng(Number(lng.toFixed(4)))
             setLat(Number(lat.toFixed(4)))
             setZoom(Number(mapRef.current!.getZoom().toFixed(2)))
+        })
+
+        mapRef.current!.on('style.load', () => {
+            mapRef.current!.on('click', (e) => {
+                const coordinates = e.lngLat
+                new mapboxgl.Popup()
+                    .setLngLat(coordinates)
+                    .setHTML('you clicked here: <br/>' + coordinates)
+                    .addTo(mapRef.current!)
+            })
         })
     }, [lng, lat, zoom, fetchData, addTileQuerySourceAndLayer])
 
