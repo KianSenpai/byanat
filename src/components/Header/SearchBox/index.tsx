@@ -6,10 +6,11 @@ import {
 } from 'primereact/autocomplete'
 import { Button } from 'primereact/button'
 import { SearchIcon } from '../../../assets/icons.tsx'
-import { Country } from '../../../assets/types.ts'
+import { City } from '../../../assets/types.ts'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../../store'
 import { setFilter } from '../../../store/slices/filterSlice.ts'
+import { setSelectedCity } from '../../../store/slices/citySlice.ts'
 
 const DropdownSection = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -66,41 +67,50 @@ const DropdownSection = () => {
 }
 
 const SearchSection = () => {
-    const countries: Country[] = [
-        { name: 'Dubai', code: '' },
-        { name: 'Muscat', code: '' },
-        { name: 'Tehran', code: '' },
+    const dispatch = useDispatch()
+    const selectedCity = useSelector(
+        (state: RootState) => state.city.selectedCity
+    )
+
+    const cities: City[] = [
+        { name: 'Dubai', code: 'DXB' },
+        { name: 'Muscat', code: 'MSC' },
+        { name: 'Tehran', code: 'TEH' },
     ]
 
-    const [selectedCountries, setSelectedCountries] = useState<
-        Country | undefined
-    >(undefined)
-    const [filteredCountries, setFilteredCountries] = useState<
-        Country[] | undefined
-    >(undefined)
+    const [filteredCities, setFilteredCities] = useState<City[] | undefined>(
+        undefined
+    )
 
     const search = (event: AutoCompleteCompleteEvent) => {
-        let _filteredCountries: Country[]
+        let _filteredCountries: City[]
 
         if (!event.query.trim().length) {
-            _filteredCountries = [...countries]
+            _filteredCountries = [...cities]
         } else {
-            _filteredCountries = countries.filter((country) =>
-                country.name.toLowerCase().includes(event.query.toLowerCase())
+            _filteredCountries = cities.filter((city) =>
+                city.name.toLowerCase().includes(event.query.toLowerCase())
             )
         }
 
-        setFilteredCountries(_filteredCountries)
+        setFilteredCities(_filteredCountries)
+    }
+
+    const handleCityChange = (e: { value: City[] }) => {
+        if (e.value.length > 0) {
+            const lastSelectedCity = e.value[e.value.length - 1]
+            dispatch(setSelectedCity([lastSelectedCity]))
+        }
     }
 
     return (
         <AutoComplete
             field="name"
             multiple
-            value={selectedCountries}
-            suggestions={filteredCountries}
+            value={selectedCity}
+            suggestions={filteredCities}
             completeMethod={search}
-            onChange={(e) => setSelectedCountries(e.value)}
+            onChange={handleCityChange}
             pt={{ root: { overflow: 'scroll', width: '100%' } }}
         />
     )

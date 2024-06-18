@@ -28,7 +28,11 @@ export interface GeoJSONResponse {
     features: Feature[]
 }
 
-export interface Country {
+export interface City {
     name: string
     code: string
+}
+
+export interface CityState {
+    selectedCity: City[] | null
 }

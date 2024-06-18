@@ -7,10 +7,13 @@ export default function Results() {
     const filter = useSelector(
         (state: RootState) => state.filter.selectedFilter
     )
+    const city = useSelector((state: RootState) => state.city.selectedCity)
 
     return (
         <div className="flex flex-col gap-4 overflow-y-auto">
-            <span className="text-3xl font-extrabold">Results in here</span>
+            <span className="text-3xl font-extrabold">
+                Results in {city ? city[0].name : ''}
+            </span>
             {geojson?.features
                 .filter((hotel) => {
                     if (!filter) return hotel
