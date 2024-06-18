@@ -4,6 +4,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import { FeatureProperties, GeoJSONResponse } from '../../assets/types.ts'
 import { useDispatch } from 'react-redux'
 import { setFetchedData } from '../../store/actions/fetchedDataAction.ts'
+import { setGeoJSON } from '../../store/slices/geojsonSlice.ts'
 
 const accessToken =
     'pk.eyJ1Ijoia2lhYWF3biIsImEiOiJja3Q2MWxjdTQwZTY2MnBqcDNkODZoejJnIn0.X7ayP4QCy30wrYV41LlaOg'
@@ -42,13 +43,11 @@ export default function MapComponent(): JSX.Element {
                     })),
                 }
 
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-expect-error
-                dispatch(setFetchedData(geoJSON))
-
                 if (mapRef.current?.getSource('tilequery')) {
                     mapRef.current.getSource('tilequery').setData(geoJSON)
                 }
+
+                dispatch(setGeoJSON(geoJSON))
             } catch (error) {
                 console.error('Error fetching tile query results:', error)
             }

@@ -7,9 +7,15 @@ import {
 import { Button } from 'primereact/button'
 import { SearchIcon } from '../../../assets/icons.tsx'
 import { Country } from '../../../assets/types.ts'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../../store'
+import { setFilter } from '../../../store/slices/filterSlice.ts'
 
 const DropdownSection = () => {
-    const [selectedFilter, setSelectedFilter] = useState(null)
+    const dispatch = useDispatch<AppDispatch>()
+    const selectedFilter = useSelector(
+        (state: RootState) => state.filter.selectedFilter
+    )
 
     const groupedFilters = [
         {
@@ -29,9 +35,9 @@ const DropdownSection = () => {
         {
             label: 'Rating',
             items: [
-                { label: 'Less than 3', value: 'Less than 3' },
-                { label: 'Between 3 and 4', value: 'Between 3 and 4' },
-                { label: 'More than 4', value: 'More than 4' },
+                { label: 'Less than 3', value: '3' },
+                { label: 'Between 3 and 4', value: '4' },
+                { label: 'More than 4', value: '5' },
             ],
         },
     ]
@@ -42,10 +48,14 @@ const DropdownSection = () => {
         </div>
     )
 
+    const handleChange = (e: { value: string }) => {
+        dispatch(setFilter(e.value))
+    }
+
     return (
         <Dropdown
             value={selectedFilter}
-            onChange={(e) => setSelectedFilter(e.value)}
+            onChange={handleChange}
             options={groupedFilters}
             optionLabel="label"
             optionGroupLabel="label"

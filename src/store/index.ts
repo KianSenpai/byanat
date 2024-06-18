@@ -1,14 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
-import fetchedDataReducer from './reducers/fetchedDataReducer'
+import filterReducer from './slices/filterSlice'
+import geojsonReducer from './slices/geojsonSlice'
 
 const store = configureStore({
     reducer: {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        fetchedData: fetchedDataReducer,
+        filter: filterReducer,
+        geojson: geojsonReducer,
     },
 })
 
 export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 
 export default store
