@@ -8,6 +8,8 @@ import { RootState } from '../../store'
 import HoverCard from './HoverCard'
 import { createRoot } from 'react-dom/client'
 import { setHotel } from '../../store/slices/hotelSlice.ts'
+import { setNewHotel } from '../../store/slices/newHotelSlice.ts'
+import NewHotel from '../Modal/NewHotel'
 
 const accessToken =
     'pk.eyJ1Ijoia2lhYWF3biIsImEiOiJja3Q2MWxjdTQwZTY2MnBqcDNkODZoejJnIn0.X7ayP4QCy30wrYV41LlaOg'
@@ -196,10 +198,23 @@ export default function MapComponent() {
         mapRef.current!.on('style.load', () => {
             mapRef.current!.on('dblclick', (e) => {
                 const coordinates = e.lngLat
-                new mapboxgl.Popup()
-                    .setLngLat(coordinates)
-                    .setHTML('You clicked here: <br/>' + coordinates)
-                    .addTo(mapRef.current!)
+                dispatch(
+                    setNewHotel({
+                        latitude: coordinates.lat,
+                        longitude: coordinates.lng,
+                        ADDRESS_LINE1: '',
+                        BATHROOMS: 0,
+                        BEDROOMS: 0,
+                        CITY: '',
+                        COUNTRY: '',
+                        GUESTS: 0,
+                        HOTEL_NAME: '',
+                        NBHD_NAME: '',
+                        PRICE: 100,
+                        RATING: 5,
+                        TYPE: '',
+                    })
+                )
             })
         })
     }, [lng, lat, zoom, handleGeoJSONFetch, addTileQuerySourceAndLayer])
@@ -218,6 +233,7 @@ export default function MapComponent() {
     return (
         <div className="cy-map h-full overflow-hidden rounded-xl">
             <div ref={mapContainerRef} className="h-full" />
+            <NewHotel />
         </div>
     )
 }

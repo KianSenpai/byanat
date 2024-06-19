@@ -62,6 +62,7 @@ const DropdownSection = () => {
             optionGroupLabel="label"
             optionGroupChildren="items"
             optionGroupTemplate={groupedItemTemplate}
+            className="w-[250px]"
         />
     )
 }
@@ -111,6 +112,7 @@ const SearchSection = () => {
             suggestions={filteredCities}
             completeMethod={search}
             onChange={handleCityChange}
+            className="w-full"
             pt={{ root: { overflow: 'scroll', width: '100%' } }}
         />
     )

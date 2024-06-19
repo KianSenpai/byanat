@@ -8,10 +8,10 @@ export interface FeatureProperties {
     HOTEL_NAME: string
     NBHD_NAME: string
     PRICE: number
-    RATING: 4.6
+    RATING: number
     TYPE: string
-    latitude: 23.5931
-    longitude: 58.3896
+    latitude: number
+    longitude: number
 }
 
 export interface Feature {
