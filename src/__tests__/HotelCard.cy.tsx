@@ -1,5 +1,5 @@
-import HotelCard from '../index.tsx'
-import '../../../../index.css'
+import HotelCard from '../components/Results/HotelCard'
+import '../index.css'
 import { mount } from 'cypress/react18'
 
 const title = 'Kian Hotel'

@@ -1,6 +1,7 @@
 import { mount } from 'cypress/react18'
-import HoverCard from '../index.tsx'
-import hotel from '../../../../assets/hotel.jpeg'
+import HoverCard from '../components/Map/HoverCard'
+import hotel from '../assets/hotel.jpeg'
+import '../index.css'
 
 describe('HoverCard Component', () => {
     it('renders loading state correctly', () => {

@@ -1,8 +1,8 @@
 import { mount } from 'cypress/react18'
-import store from '../../../../store'
+import store from '../store'
 import { Provider } from 'react-redux'
-import SearchBox from '../index.tsx'
-import '../../../../index.css'
+import SearchBox from '../components/Header/SearchBox'
+import '../index.css'
 
 describe('SearchBox Component', () => {
     beforeEach(() => {
