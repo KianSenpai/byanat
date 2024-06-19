@@ -198,7 +198,7 @@ export default function MapComponent() {
     }, [handleGeoJSONFetch, city])
 
     return (
-        <div className="cy-map h-full">
+        <div className="cy-map h-full overflow-hidden rounded-xl">
             <div ref={mapContainerRef} className="h-full" />
         </div>
     )

@@ -1,6 +1,8 @@
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
 import HotelCard from './HotelCard'
+import { DataScroller } from 'primereact/datascroller'
+import { Feature } from '../../assets/types.ts'
 
 export default function Results() {
     const geojson = useSelector((state: RootState) => state.geojson.geojson)
@@ -9,13 +11,28 @@ export default function Results() {
     )
     const city = useSelector((state: RootState) => state.city.selectedCity)
 
+    const itemTemplate = (hotel: Feature) => {
+        return (
+            <HotelCard
+                key={hotel.properties?.HOTEL_NAME}
+                title={hotel.properties?.HOTEL_NAME}
+                rating={hotel.properties?.RATING}
+                guest={hotel.properties?.GUESTS}
+                bedroom={hotel.properties?.BEDROOMS}
+                bathroom={hotel.properties?.BATHROOMS}
+                area={hotel.properties?.NBHD_NAME}
+                type={hotel.properties?.TYPE}
+            />
+        )
+    }
+
     return (
         <div className="flex flex-col gap-4 overflow-y-auto">
             <span className="text-3xl font-extrabold">
                 Results in {city ? city[0].name : ''}
             </span>
-            {geojson?.features
-                .filter((hotel) => {
+            <DataScroller
+                value={geojson?.features.filter((hotel) => {
                     if (!filter) return hotel
 
                     const rating = Number(filter)
@@ -36,19 +53,12 @@ export default function Results() {
                     }
 
                     return hotel.properties?.TYPE === filter
-                })
-                .map((hotel) => (
-                    <HotelCard
-                        key={hotel.properties?.HOTEL_NAME}
-                        title={hotel.properties?.HOTEL_NAME}
-                        rating={hotel.properties?.RATING}
-                        guest={hotel.properties?.GUESTS}
-                        bedroom={hotel.properties?.BEDROOMS}
-                        bathroom={hotel.properties?.BATHROOMS}
-                        area={hotel.properties?.NBHD_NAME}
-                        type={hotel.properties?.TYPE}
-                    />
-                ))}
+                })}
+                itemTemplate={itemTemplate}
+                rows={100}
+                inline
+                scrollHeight="100vh"
+            />
         </div>
     )
 }

@@ -11,10 +11,10 @@ export default function App() {
             <Header />
             <Container className="px-8 py-6">
                 <div className="grid max-h-full w-full grid-cols-5 gap-8">
-                    <div className="col-span-2 max-h-full">
+                    <div className="col-span-2">
                         <Results />
                     </div>
-                    <div className="col-span-2">
+                    <div className="col-span-3 xl:col-span-2">
                         <MapComponent />
                     </div>
                     <WidgetContainer />

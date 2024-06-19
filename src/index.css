@@ -40,3 +40,8 @@ html {
     font-size: 14px;
     border-radius: 0 0 10px 10px;
 }
+
+.p-datascroller-content, .p-datascroller {
+    background-color: transparent;
+    padding: 0;
+}
