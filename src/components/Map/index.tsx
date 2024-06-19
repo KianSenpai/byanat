@@ -190,7 +190,7 @@ export default function MapComponent() {
 
     return (
         <div className="cy-map h-full">
-            <div ref={mapContainerRef} />
+            <div ref={mapContainerRef} className="h-full" />
         </div>
     )
 }

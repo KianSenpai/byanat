@@ -5,6 +5,7 @@ import {
     ShareWithSuperHostIcon,
     StarIcon,
 } from '../../../assets/icons.tsx'
+import hotel from '../../../assets/hotel.jpeg'
 
 interface IHotelCard {
     isLoading?: boolean
@@ -34,7 +35,7 @@ const getTypeIcon = (type: string) => {
 const HotelCardImage = ({ image }: { image?: string }) => (
     <div className="h-40 w-full overflow-hidden rounded-2xl md:w-1/2">
         {image ? (
-            <img src={image} alt="" className="h-full w-full" />
+            <img src={image} alt="hotel" className="h-full w-full" />
         ) : (
             <Skeleton width="100%" height="100%" />
         )}
@@ -126,7 +127,7 @@ export default function HotelCard({
                 </>
             ) : (
                 <>
-                    <HotelCardImage image={image} />
+                    <HotelCardImage image={hotel} />
                     <HotelCardData
                         title={title}
                         rating={rating}
