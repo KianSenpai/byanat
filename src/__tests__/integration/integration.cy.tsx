@@ -4,7 +4,7 @@ import store from '../../store'
 import SearchBox from '../../components/Header/SearchBox'
 import MapComponent from '../../components/Map'
 import Results from '../../components/Results'
-import '../index.css'
+import '../../index.css'
 
 describe('Search Box, Map, and Results Integration', () => {
     beforeEach(() => {

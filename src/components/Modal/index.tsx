@@ -13,7 +13,7 @@ export default function Modal({ open, onClose, children, title }: IModal) {
         <Dialog
             header={title}
             visible={open}
-            className="w-full md:w-1/2"
+            className="m-4 w-full md:w-1/2"
             onHide={onClose}
         >
             <div className="m-0">{children}</div>
