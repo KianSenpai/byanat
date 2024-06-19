@@ -7,6 +7,7 @@ import { setGeoJSON } from '../../store/slices/geojsonSlice'
 import { RootState } from '../../store'
 import HoverCard from './HoverCard'
 import { createRoot } from 'react-dom/client'
+import { setHotel } from '../../store/slices/hotelSlice.ts'
 
 const accessToken =
     'pk.eyJ1Ijoia2lhYWF3biIsImEiOiJja3Q2MWxjdTQwZTY2MnBqcDNkODZoejJnIn0.X7ayP4QCy30wrYV41LlaOg'
@@ -140,6 +141,14 @@ export default function MapComponent() {
         mapRef.current.on('mouseleave', 'tilequery-points', () => {
             mapRef.current!.getCanvas().style.cursor = ''
             popup.remove()
+        })
+
+        mapRef.current.on('click', 'tilequery-points', (event) => {
+            const features = event.features
+            if (features && features.length > 0) {
+                const properties = features[0].properties as FeatureProperties
+                dispatch(setHotel(properties))
+            }
         })
     }, [])
 

@@ -3,6 +3,7 @@ import Container from './components/Container'
 import WidgetContainer from './components/Widgets/WidgetContainer'
 import MapComponent from './components/Map'
 import Results from './components/Results'
+import HotelInfo from './components/Modal/HotelInfo'
 
 export default function App() {
     return (
@@ -18,6 +19,7 @@ export default function App() {
                     </div>
                     <WidgetContainer />
                 </div>
+                <HotelInfo />
             </Container>
         </div>
     )
