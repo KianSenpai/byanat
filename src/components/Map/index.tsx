@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setGeoJSON } from '../../store/slices/geojsonSlice'
 import { RootState } from '../../store'
 import HoverCard from './HoverCard'
-import ReactDOM from 'react-dom'
 import { createRoot } from 'react-dom/client'
 
 const accessToken =
@@ -41,7 +40,6 @@ export default function MapComponent() {
     useEffect(() => {
         if (city) {
             const coordinates = initialCoordinates[city[0].name]
-            console.log(coordinates)
             if (coordinates) {
                 setLng(coordinates[0])
                 setLat(coordinates[1])
@@ -191,8 +189,8 @@ export default function MapComponent() {
     }, [handleGeoJSONFetch, city])
 
     return (
-        <div className="h-full">
-            <div ref={mapContainerRef} className="h-full" />
+        <div className="cy-map h-full">
+            <div ref={mapContainerRef} />
         </div>
     )
 }
