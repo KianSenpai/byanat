@@ -4,8 +4,11 @@ import HotelCard from './HotelCard'
 import { DataScroller } from 'primereact/datascroller'
 import { Feature, FeatureProperties } from '../../assets/types.ts'
 import { setHotel } from '../../store/slices/hotelSlice.ts'
+import FilterContainer from './FilterContainer'
+import { useState } from 'react'
 
 export default function Results() {
+    const [selectedFilter, setSelectedFilter] = useState('')
     const dispatch = useDispatch()
     const geojson = useSelector((state: RootState) => state.geojson.geojson)
     const filter = useSelector(
@@ -39,39 +42,60 @@ export default function Results() {
             <span className="text-3xl font-extrabold">
                 Results in {city ? city[0].name : ''}
             </span>
+            <FilterContainer onChange={(e) => setSelectedFilter(e)} />
             {geojson ? (
                 <DataScroller
-                    value={geojson?.features.filter((hotel) => {
-                        if (!filter) return hotel
+                    value={geojson?.features
+                        .filter((hotel) => {
+                            if (!filter) return hotel
 
-                        const rating = Number(filter)
-                        if (!isNaN(rating)) {
-                            switch (rating) {
-                                case 3:
-                                    return hotel.properties?.RATING < 3
-                                case 4:
-                                    return (
-                                        hotel.properties?.RATING >= 3 &&
-                                        hotel.properties?.RATING < 4
-                                    )
-                                case 5:
-                                    return hotel.properties?.RATING >= 4
-                                default:
-                                    return hotel
+                            const rating = Number(filter)
+                            if (!isNaN(rating)) {
+                                switch (rating) {
+                                    case 3:
+                                        return hotel.properties?.RATING < 3
+                                    case 4:
+                                        return (
+                                            hotel.properties?.RATING >= 3 &&
+                                            hotel.properties?.RATING < 4
+                                        )
+                                    case 5:
+                                        return hotel.properties?.RATING >= 4
+                                    default:
+                                        return hotel
+                                }
                             }
-                        }
 
-                        return hotel.properties?.TYPE === filter
-                    })}
+                            return hotel.properties?.TYPE === filter
+                        })
+                        .sort((a, b) => {
+                            if (selectedFilter === 'price') {
+                                return a.properties?.PRICE - b.properties?.PRICE
+                            }
+                            if (selectedFilter === 'name') {
+                                if (
+                                    a.properties?.HOTEL_NAME <
+                                    b.properties?.HOTEL_NAME
+                                )
+                                    return -1
+                                if (
+                                    a.properties?.HOTEL_NAME >
+                                    b.properties?.HOTEL_NAME
+                                )
+                                    return 1
+                                return 0
+                            }
+                            return
+                        })}
                     itemTemplate={itemTemplate}
                     rows={100}
                     inline
-                    scrollHeight="calc(100vh - 210px)"
+                    scrollHeight="calc(100vh - 250px)"
                 />
             ) : (
                 <div
                     className="flex flex-col"
-                    style={{ height: 'calc(100vh - 210px)' }}
+                    style={{ height: 'calc(100vh - 250px)' }}
                 >
                     <HotelCard isLoading={true} />
                     <HotelCard isLoading={true} />
