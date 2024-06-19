@@ -6,9 +6,18 @@ import {
 } from 'primereact/autocomplete'
 import { Button } from 'primereact/button'
 import { SearchIcon } from '../../../assets/icons.tsx'
+import { City } from '../../../assets/types.ts'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../../store'
+import { setFilter } from '../../../store/slices/filterSlice.ts'
+import { setSelectedCity } from '../../../store/slices/citySlice.ts'
 
 const DropdownSection = () => {
-    const [selectedFilter, setSelectedFilter] = useState(null)
+    const dispatch = useDispatch<AppDispatch>()
+    const selectedFilter = useSelector(
+        (state: RootState) => state.filter.selectedFilter
+    )
+
     const groupedFilters = [
         {
             label: 'Type',
@@ -27,83 +36,83 @@ const DropdownSection = () => {
         {
             label: 'Rating',
             items: [
-                {
-                    label: 'Less than 3',
-                    value: 'Less than 3',
-                },
-                { label: 'Between 3 and 4', value: 'Between 3 and 4' },
-                {
-                    label: 'More then 4',
-                    value: 'More then 4',
-                },
+                { label: 'Less than 3', value: '3' },
+                { label: 'Between 3 and 4', value: '4' },
+                { label: 'More than 4', value: '5' },
             ],
         },
     ]
-    const groupedItemTemplate = (option: {
-        label: string
-        items: { label: string; value: string }[]
-    }) => {
-        return (
-            <div className="align-items-center flex">
-                <div>{option.label}</div>
-            </div>
-        )
+
+    const groupedItemTemplate = (option: { label: string }) => (
+        <div className="align-items-center flex">
+            <div>{option.label}</div>
+        </div>
+    )
+
+    const handleChange = (e: { value: string }) => {
+        dispatch(setFilter(e.value))
     }
 
     return (
         <Dropdown
             value={selectedFilter}
-            onChange={(e) => setSelectedFilter(e.value)}
+            onChange={handleChange}
             options={groupedFilters}
             optionLabel="label"
             optionGroupLabel="label"
             optionGroupChildren="items"
             optionGroupTemplate={groupedItemTemplate}
+            className="w-[250px]"
         />
     )
 }
 
-interface Country {
-    name: string
-    code: string
-}
-
 const SearchSection = () => {
-    const countries = [
-        { name: 'Los Angeles', code: '' },
-        { name: 'Muscat', code: '' },
+    const dispatch = useDispatch()
+    const selectedCity = useSelector(
+        (state: RootState) => state.city.selectedCity
+    )
+
+    const cities: City[] = [
+        { name: 'Dubai', code: 'DXB' },
+        { name: 'Muscat', code: 'MSC' },
+        { name: 'Tehran', code: 'TEH' },
     ]
-    const [selectedCountries, setSelectedCountries] = useState<
-        Country | undefined
-    >(undefined)
-    const [filteredCountries, setFilteredCountries] = useState<
-        Country[] | undefined
-    >(undefined)
+
+    const [filteredCities, setFilteredCities] = useState<City[] | undefined>(
+        undefined
+    )
 
     const search = (event: AutoCompleteCompleteEvent) => {
-        let _filteredCountries
+        let _filteredCountries: City[]
 
         if (!event.query.trim().length) {
-            _filteredCountries = [...countries]
+            _filteredCountries = [...cities]
         } else {
-            _filteredCountries = countries.filter((country) => {
-                return country.name
-                    .toLowerCase()
-                    .includes(event.query.toLowerCase())
-            })
+            _filteredCountries = cities.filter((city) =>
+                city.name.toLowerCase().includes(event.query.toLowerCase())
+            )
         }
 
-        setFilteredCountries(_filteredCountries)
+        setFilteredCities(_filteredCountries)
+    }
+
+    const handleCityChange = (e: { value: City[] }) => {
+        if (e.value.length > 0) {
+            const lastSelectedCity = e.value[e.value.length - 1]
+            dispatch(setSelectedCity([lastSelectedCity]))
+        }
     }
 
     return (
         <AutoComplete
             field="name"
             multiple
-            value={selectedCountries}
-            suggestions={filteredCountries}
+            value={selectedCity}
+            suggestions={filteredCities}
             completeMethod={search}
-            onChange={(e) => setSelectedCountries(e.value)}
+            onChange={handleCityChange}
+            className="w-full"
             pt={{ root: { overflow: 'scroll', width: '100%' } }}
         />
     )
@@ -111,7 +120,7 @@ const SearchSection = () => {
 
 export default function SearchBox() {
     return (
-        <div className="flex h-14 w-[600px]">
+        <div className="cy-searchbox flex h-14 w-[600px]">
             <div className="flex w-full rounded-l-md border-y border-l border-slate-300">
                 <DropdownSection />
                 <SearchSection />

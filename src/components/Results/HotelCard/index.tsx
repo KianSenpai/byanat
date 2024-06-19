@@ -4,14 +4,15 @@ import {
     EntireStudioApartmentIcon,
     ShareWithSuperHostIcon,
     StarIcon,
-} from '../../assets/icons.tsx'
+} from '../../../assets/icons.tsx'
+import hotel from '../../../assets/hotel.jpeg'
 
 interface IHotelCard {
     isLoading?: boolean
     image?: string
     title?: string
     rating?: number | string
-    price?: string
+    area?: string
     guest?: number
     bedroom?: number
     bathroom?: number
@@ -34,7 +35,7 @@ const getTypeIcon = (type: string) => {
 const HotelCardImage = ({ image }: { image?: string }) => (
     <div className="h-40 w-full overflow-hidden rounded-2xl md:w-1/2">
         {image ? (
-            <img src={image} alt="" className="h-full w-full" />
+            <img src={image} alt="hotel" className="h-full w-full" />
         ) : (
             <Skeleton width="100%" height="100%" />
         )}
@@ -42,7 +43,7 @@ const HotelCardImage = ({ image }: { image?: string }) => (
 )
 
 const HotelCardLoading = () => (
-    <div className="cy-hotelcard-loading flex w-full flex-col gap-3.5 p-2.5 md:w-1/2">
+    <div className="cy-hotelcard-loading flex w-full flex-col items-center gap-3.5 p-2.5 xl:w-1/2 xl:items-start">
         <Skeleton width="100%" height="24px" />
         <div className="flex gap-5">
             <Skeleton width="48px" height="24px" />
@@ -63,13 +64,13 @@ const HotelCardLoading = () => (
 const HotelCardData = ({
     title,
     rating,
-    price,
+    area,
     guest,
     bedroom,
     bathroom,
     type,
 }: IHotelCard) => (
-    <div className="cy-hotelcard-data flex w-full flex-col gap-3.5 p-2.5 text-sm font-light md:w-1/2">
+    <div className="cy-hotelcard-data flex w-full flex-col items-center gap-3.5 p-2.5 text-sm font-light xl:w-1/2 xl:items-start">
         {title && <span className="text-lg font-extrabold">{title}</span>}
         <div className="flex items-center gap-5">
             {rating && (
@@ -78,7 +79,7 @@ const HotelCardData = ({
                     <span>{rating}</span>
                 </div>
             )}
-            {price && <span>{price}</span>}
+            {area && <span>{area}</span>}
         </div>
         <div className="flex gap-1">
             {guest && (
@@ -111,14 +112,14 @@ export default function HotelCard({
     image,
     title,
     rating,
-    price,
+    area,
     guest,
     bedroom,
     bathroom,
     type,
 }: IHotelCard) {
     return (
-        <div className="cy-hotelcard flex w-full flex-col items-center justify-between gap-2.5 rounded-2xl bg-white p-2.5 shadow-md md:flex-row">
+        <div className="cy-hotelcard mb-4 flex w-full flex-col items-center justify-between gap-2.5 rounded-2xl bg-white p-2.5 shadow-md xl:flex-row">
             {isLoading ? (
                 <>
                     <HotelCardImage />
@@ -126,11 +127,11 @@ export default function HotelCard({
                 </>
             ) : (
                 <>
-                    <HotelCardImage image={image} />
+                    <HotelCardImage image={hotel} />
                     <HotelCardData
                         title={title}
                         rating={rating}
-                        price={price}
+                        area={area}
                         guest={guest}
                         bedroom={bedroom}
                         bathroom={bathroom}

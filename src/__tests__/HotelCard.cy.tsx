@@ -1,24 +1,25 @@
-import HotelCard from '../index.tsx'
-import '../../../index.css'
+import HotelCard from '../components/Results/HotelCard'
+import '../index.css'
+import { mount } from 'cypress/react18'
 
 const title = 'Kian Hotel'
 const rating = 4.7
-const price = '1000$'
+const price = '1000'
 const type = 'Entire Home'
 
 describe('Checking hotel card', () => {
     it('should show loading', () => {
-        cy.mount(<HotelCard isLoading />)
+        mount(<HotelCard isLoading />)
         cy.get('.cy-hotelcard-loading').should('exist')
         cy.get('.cy-hotelcard-data').should('not.exist')
     })
     it('should have title, rating, price, type', () => {
-        cy.mount(
+        mount(
             <HotelCard
                 isLoading={false}
                 title={title}
                 rating={rating}
-                price={price}
+                area={price}
                 type={type}
             />
         )
@@ -31,7 +32,7 @@ describe('Checking hotel card', () => {
     })
     context('grammar', () => {
         it('should use single words', () => {
-            cy.mount(
+            mount(
                 <HotelCard
                     isLoading={false}
                     guest={1}
@@ -46,7 +47,7 @@ describe('Checking hotel card', () => {
             cy.contains('bathroom')
         })
         it('should use plural words', () => {
-            cy.mount(
+            mount(
                 <HotelCard
                     isLoading={false}
                     guest={2}
