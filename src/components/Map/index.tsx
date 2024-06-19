@@ -68,6 +68,24 @@ export default function MapComponent() {
                     mapRef.current.getSource('tilequery').setData(geoJSON)
                 }
                 dispatch(setGeoJSON(geoJSON))
+
+                geoJSON.features.forEach((feature) => {
+                    const coordinates = feature.geometry.coordinates
+                    const properties = feature.properties as FeatureProperties
+                    const el = document.createElement('div')
+                    el.className = 'marker'
+                    el.style.backgroundColor = 'white'
+                    el.style.border = '1px solid gray'
+                    el.style.padding = '5px'
+                    el.style.borderRadius = '5px'
+                    el.innerHTML = `$${properties.PRICE}`
+                    el.style.textAlign = 'center'
+                    el.style.width = '50px'
+
+                    new mapboxgl.Marker(el)
+                        .setLngLat(coordinates)
+                        .addTo(mapRef.current!)
+                })
             } catch (error) {
                 console.error('Error fetching tile query results:', error)
             }
@@ -86,29 +104,29 @@ export default function MapComponent() {
             },
         })
 
-        mapRef.current.addLayer({
-            id: 'tilequery-points',
-            type: 'circle',
-            source: 'tilequery',
-            paint: {
-                'circle-stroke-color': 'red',
-                'circle-stroke-width': {
-                    stops: [
-                        [0, 0.1],
-                        [18, 3],
-                    ],
-                    base: 5,
-                },
-                'circle-radius': {
-                    stops: [
-                        [12, 5],
-                        [22, 180],
-                    ],
-                    base: 5,
-                },
-                'circle-color': 'blue',
-            },
-        })
+        // mapRef.current.addLayer({
+        //     id: 'tilequery-points',
+        //     type: 'circle',
+        //     source: 'tilequery',
+        //     paint: {
+        //         'circle-stroke-color': 'red',
+        //         'circle-stroke-width': {
+        //             stops: [
+        //                 [0, 0.1],
+        //                 [18, 3],
+        //             ],
+        //             base: 5,
+        //         },
+        //         'circle-radius': {
+        //             stops: [
+        //                 [12, 5],
+        //                 [22, 180],
+        //             ],
+        //             base: 5,
+        //         },
+        //         'circle-color': 'blue',
+        //     },
+        // })
 
         const popup = new mapboxgl.Popup()
 
