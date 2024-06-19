@@ -39,34 +39,46 @@ export default function Results() {
             <span className="text-3xl font-extrabold">
                 Results in {city ? city[0].name : ''}
             </span>
-            <DataScroller
-                value={geojson?.features.filter((hotel) => {
-                    if (!filter) return hotel
+            {geojson ? (
+                <DataScroller
+                    value={geojson?.features.filter((hotel) => {
+                        if (!filter) return hotel
 
-                    const rating = Number(filter)
-                    if (!isNaN(rating)) {
-                        switch (rating) {
-                            case 3:
-                                return hotel.properties?.RATING < 3
-                            case 4:
-                                return (
-                                    hotel.properties?.RATING >= 3 &&
-                                    hotel.properties?.RATING < 4
-                                )
-                            case 5:
-                                return hotel.properties?.RATING >= 4
-                            default:
-                                return hotel
+                        const rating = Number(filter)
+                        if (!isNaN(rating)) {
+                            switch (rating) {
+                                case 3:
+                                    return hotel.properties?.RATING < 3
+                                case 4:
+                                    return (
+                                        hotel.properties?.RATING >= 3 &&
+                                        hotel.properties?.RATING < 4
+                                    )
+                                case 5:
+                                    return hotel.properties?.RATING >= 4
+                                default:
+                                    return hotel
+                            }
                         }
-                    }
 
-                    return hotel.properties?.TYPE === filter
-                })}
-                itemTemplate={itemTemplate}
-                rows={100}
-                inline
-                scrollHeight="calc(100vh - 210px)"
-            />
+                        return hotel.properties?.TYPE === filter
+                    })}
+                    itemTemplate={itemTemplate}
+                    rows={100}
+                    inline
+                    scrollHeight="calc(100vh - 210px)"
+                />
+            ) : (
+                <div
+                    className="flex flex-col"
+                    style={{ height: 'calc(100vh - 210px)' }}
+                >
+                    <HotelCard isLoading={true} />
+                    <HotelCard isLoading={true} />
+                    <HotelCard isLoading={true} />
+                    <HotelCard isLoading={true} />
+                </div>
+            )}
         </div>
     )
 }

@@ -79,7 +79,7 @@ export default function WidgetCard({
     drop(ref)
     drag(handleRef)
 
-    const [dimensions, setDimensions] = useState({ width: 200, height: 100 })
+    const [dimensions, setDimensions] = useState({ width: 300, height: 200 })
 
     const onResize = (
         _: unknown,
@@ -93,7 +93,7 @@ export default function WidgetCard({
             width={dimensions.width}
             height={dimensions.height}
             onResize={onResize}
-            minConstraints={[150, 50]}
+            minConstraints={[200, 150]}
             maxConstraints={[500, 300]}
             draggableOpts={{ grid: [25, 25] }}
         >
