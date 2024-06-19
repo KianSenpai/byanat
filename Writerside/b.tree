@@ -7,6 +7,6 @@
                  start-page="starter-topic.md">
 
     <toc-element topic="starter-topic.md">
+        <toc-element topic="Map-Component.md"/>
     </toc-element>
-    <toc-element topic="Map-Component.md"/>
 </instance-profile>
