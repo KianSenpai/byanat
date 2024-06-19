@@ -118,7 +118,7 @@ const SearchSection = () => {
 
 export default function SearchBox() {
     return (
-        <div className="flex h-14 w-[600px]">
+        <div className="cy-searchbox flex h-14 w-[600px]">
             <div className="flex w-full rounded-l-md border-y border-l border-slate-300">
                 <DropdownSection />
                 <SearchSection />

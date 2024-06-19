@@ -5,6 +5,9 @@ import { FeatureProperties, GeoJSONResponse } from '../../assets/types'
 import { useDispatch, useSelector } from 'react-redux'
 import { setGeoJSON } from '../../store/slices/geojsonSlice'
 import { RootState } from '../../store'
+import HoverCard from './HoverCard'
+import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 
 const accessToken =
     'pk.eyJ1Ijoia2lhYWF3biIsImEiOiJja3Q2MWxjdTQwZTY2MnBqcDNkODZoejJnIn0.X7ayP4QCy30wrYV41LlaOg'
@@ -13,7 +16,7 @@ const tileID = 'kiaaawn.c8xnqxjp'
 const initialCoordinates = {
     Muscat: [58.38, 23.58],
     Dubai: [55.27, 25.2],
-    Tehran: [51.33, 35.72],
+    Tehran: [51.37, 35.74],
 }
 
 const fetchGeoJSON = async (center: [number, number]) => {
@@ -70,7 +73,7 @@ export default function MapComponent() {
                 console.error('Error fetching tile query results:', error)
             }
         },
-        [dispatch]
+        [dispatch, city]
     )
 
     const addTileQuerySourceAndLayer = useCallback(() => {
@@ -116,12 +119,22 @@ export default function MapComponent() {
                 mapRef.current!.getCanvas().style.cursor = 'pointer'
                 const coordinates = features[0].geometry.coordinates.slice()
                 const properties = features[0].properties as FeatureProperties
-                const content = `<h3>${properties.HOTEL_NAME}</h3>
-                <p>${properties.ADDRESS_LINE1}</p>
-                <p>${properties.CITY}, ${properties.COUNTRY}</p>`
                 popup
                     .setLngLat(coordinates)
-                    .setHTML(content)
+                    .setDOMContent(
+                        (() => {
+                            const container = document.createElement('div')
+                            const root = createRoot(container)
+                            root.render(
+                                <HoverCard
+                                    bedroom={properties.BEDROOMS}
+                                    bathroom={properties.BATHROOMS}
+                                    price={properties.PRICE}
+                                />
+                            )
+                            return container
+                        })()
+                    )
                     .addTo(mapRef.current!)
             }
         })
@@ -144,7 +157,6 @@ export default function MapComponent() {
         })
 
         mapRef.current.on('load', () => {
-            console.log('aaaaaaa')
             addTileQuerySourceAndLayer()
             handleGeoJSONFetch([lng, lat])
         })
@@ -157,7 +169,7 @@ export default function MapComponent() {
         })
 
         mapRef.current!.on('style.load', () => {
-            mapRef.current!.on('click', (e) => {
+            mapRef.current!.on('dblclick', (e) => {
                 const coordinates = e.lngLat
                 new mapboxgl.Popup()
                     .setLngLat(coordinates)
@@ -173,9 +185,10 @@ export default function MapComponent() {
 
     useEffect(() => {
         if (mapRef.current && city) {
+            mapRef.current.setCenter([lng, lat])
             handleGeoJSONFetch([lng, lat])
         }
-    }, [handleGeoJSONFetch, city, lng, lat])
+    }, [handleGeoJSONFetch, city])
 
     return (
         <div className="h-full">
