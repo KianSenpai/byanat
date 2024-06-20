@@ -4,6 +4,7 @@ import WidgetContainer from './components/Widgets/WidgetContainer'
 import MapComponent from './components/Map'
 import Results from './components/Results'
 import HotelInfo from './components/Modal/HotelInfo'
+import Footer from './components/Footer'
 
 export default function App() {
     return (
@@ -24,6 +25,7 @@ export default function App() {
                         <WidgetContainer />
                     </div>
                 </div>
+                <Footer />
                 <HotelInfo />
             </Container>
         </div>
