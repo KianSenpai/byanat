@@ -219,20 +219,16 @@ export default function FieldContainer() {
     }, [])
 
     return (
-        <>
+        <div className="flex w-full flex-col justify-between md:w-2/3">
             <Toast ref={toast} />
-            <SortablePane
-                direction="vertical"
-                className="h-fit w-full"
-                margin={16}
-            >
+            <SortablePane direction="vertical" className="w-full" margin={16}>
                 {initialCards.map((card) => renderCard(card))}
             </SortablePane>
             <Button
                 label="confirm"
-                className="mt-24 border border-slate-200 px-8 py-4"
+                className="mt-96 border border-slate-200 px-8 py-4"
                 onClick={handleClick}
             />
-        </>
+        </div>
     )
 }

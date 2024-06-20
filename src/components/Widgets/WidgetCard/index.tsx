@@ -1,5 +1,4 @@
 import { ReactNode } from 'react'
-import 'react-resizable/css/styles.css'
 import { HandleIcon } from '../../../assets/icons.tsx'
 
 interface IWidgetCard {
