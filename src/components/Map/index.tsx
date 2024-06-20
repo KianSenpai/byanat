@@ -34,10 +34,13 @@ const fetchGeoJSON = async (center: [number, number]) => {
 export default function MapComponent() {
     const mapContainerRef = useRef<HTMLDivElement | null>(null)
     const mapRef = useRef<Map | null>(null)
+
     const [lng, setLng] = useState<number>(initialCoordinates.Muscat[0])
     const [lat, setLat] = useState<number>(initialCoordinates.Muscat[1])
     const [zoom, setZoom] = useState<number>(12)
+
     const city = useSelector((state: RootState) => state.city.selectedCity)
+
     const dispatch = useDispatch()
 
     useEffect(() => {
