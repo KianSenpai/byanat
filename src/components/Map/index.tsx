@@ -224,7 +224,7 @@ export default function MapComponent() {
                 handleGeoJSONFetch(coordinates)
             }
         }
-    }, [handleGeoJSONFetch, city, lng, lat])
+    }, [handleGeoJSONFetch, city])
 
     return (
         <div className="cy-map h-full overflow-hidden rounded-xl">
