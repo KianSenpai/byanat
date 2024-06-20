@@ -1,7 +1,6 @@
-import update from 'immutability-helper'
 import { ReactNode, useEffect, useState } from 'react'
-import Filter from '../Filter'
 import ToggleBtn from '../../ToggleBtn'
+import { Pane, SortablePane } from 'react-sortable-pane'
 
 interface Item {
     id: number
@@ -41,31 +40,21 @@ export default function FilterContainer({ onChange }: IFilterContainer) {
             ),
         },
     ]
-    const [cards, setCards] = useState<Item[]>(initialCards)
-
-    const moveCard = (dragIndex: number, hoverIndex: number) => {
-        setCards((prevCards: Item[]) =>
-            update(prevCards, {
-                $splice: [
-                    [dragIndex, 1],
-                    [hoverIndex, 0, prevCards[dragIndex] as Item],
-                ],
-            })
-        )
-    }
 
     return (
-        <div className="flex flex-row gap-5">
-            {cards.map((card, i) => (
-                <Filter
+        <SortablePane
+            direction="horizontal"
+            className="mb-8 h-fit w-full"
+            margin={16}
+        >
+            {initialCards.map((card) => (
+                <Pane
                     key={card.id}
-                    index={i}
-                    id={card.id}
-                    moveCard={moveCard}
+                    resizable={{ x: false, y: false, xy: false }}
                 >
                     {card.body}
-                </Filter>
+                </Pane>
             ))}
-        </div>
+        </SortablePane>
     )
 }

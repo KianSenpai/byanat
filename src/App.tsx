@@ -21,7 +21,7 @@ export default function App() {
                     <div className="col-span-5 h-full md:col-span-3 xl:col-span-2">
                         <MapComponent />
                     </div>
-                    <div className="hidden xl:flex">
+                    <div className="hidden h-full xl:flex">
                         <WidgetContainer />
                     </div>
                 </div>

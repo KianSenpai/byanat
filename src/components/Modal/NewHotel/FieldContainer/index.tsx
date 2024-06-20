@@ -1,11 +1,14 @@
-import update from 'immutability-helper'
-import { ReactNode, useCallback, useState, useEffect } from 'react'
-import FieldCard from '../FieldCard'
-import { useSelector } from 'react-redux'
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../../store'
 import { InputText } from 'primereact/inputtext'
 import { InputNumber } from 'primereact/inputnumber'
 import { Dropdown } from 'primereact/dropdown'
+import { Pane, SortablePane } from 'react-sortable-pane'
+import { Button } from 'primereact/button'
+import { FeatureProperties } from '../../../../assets/types.ts'
+import { setNewHotel } from '../../../../store/slices/newHotelSlice.ts'
+import { Toast } from 'primereact/toast'
 
 interface Item {
     id: number
@@ -30,7 +33,11 @@ const validateEmail = (email: string) => {
 }
 
 export default function FieldContainer() {
+    const toast = useRef(null)
+
     const newHotel = useSelector((state: RootState) => state.newHotel.hotel)
+
+    const [name, setName] = useState(newHotel?.HOTEL_NAME || '')
     const [area, setArea] = useState(newHotel?.NBHD_NAME || '')
     const [address, setAddress] = useState(newHotel?.ADDRESS_LINE1 || '')
     const [guest, setGuest] = useState(newHotel?.GUESTS || 0)
@@ -39,8 +46,11 @@ export default function FieldContainer() {
     const [type, setType] = useState(newHotel?.TYPE || types[0].code)
     const [email, setEmail] = useState('')
 
+    const dispatch = useDispatch()
+
     useEffect(() => {
         if (newHotel) {
+            setName(newHotel.HOTEL_NAME || '')
             setArea(newHotel.NBHD_NAME || '')
             setAddress(newHotel.ADDRESS_LINE1 || '')
             setGuest(newHotel.GUESTS || 0)
@@ -151,47 +161,74 @@ export default function FieldContainer() {
                 </div>
             ),
         },
+        {
+            id: 8,
+            body: (
+                <div className="grid w-full grid-cols-2">
+                    <span>Email (Just to show I can validate)</span>
+                    <InputText
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className={`${validateEmail(email) ? '' : 'border-red-500'} border`}
+                    />
+                </div>
+            ),
+        },
     ]
-    const [cards, setCards] = useState<Item[]>(initialCards)
 
-    const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
-        setCards((prevCards: Item[]) =>
-            update(prevCards, {
-                $splice: [
-                    [dragIndex, 1],
-                    [hoverIndex, 0, prevCards[dragIndex] as Item],
-                ],
-            })
+    const showWarn = () => {
+        toast.current.show({
+            severity: 'warn',
+            summary: 'Warning',
+            detail: 'All data are saved in redux, now we need an API to send data and recall the map API to get new data',
+            life: 3000,
+        })
+    }
+
+    const handleClick = () => {
+        const hotelData: FeatureProperties = {
+            HOTEL_NAME: name.length ? name : 'default hotel',
+            NBHD_NAME: area.length ? area : 'default area',
+            ADDRESS_LINE1: address.length ? address : 'default address',
+            PRICE: 1000,
+            RATING: 5,
+            BATHROOMS: bathroom ? bathroom : 1,
+            BEDROOMS: bedroom ? bedroom : 1,
+            GUESTS: guest ? guest : 1,
+            CITY: 'aaa',
+            COUNTRY: 'aaa',
+            TYPE: type.length ? type : 'Entire Studio Apartment',
+            latitude: newHotel?.latitude || 0,
+            longitude: newHotel?.longitude || 0,
+        }
+
+        dispatch(setNewHotel(hotelData))
+        showWarn()
+    }
+
+    const renderCard = useCallback((card: Item) => {
+        return (
+            <Pane
+                key={card.id}
+                className="w-full"
+                resizable={{ x: false, y: false, xy: false }}
+            >
+                {card.body}
+            </Pane>
         )
     }, [])
 
-    const renderCard = useCallback(
-        (card: Item, index: number) => {
-            return (
-                <FieldCard
-                    key={card.id}
-                    index={index}
-                    id={card.id}
-                    moveCard={moveCard}
-                >
-                    {card.body}
-                </FieldCard>
-            )
-        },
-        [moveCard]
-    )
-
     return (
-        <div className="flex w-full flex-col gap-2 md:w-2/3">
-            {cards.map((card, i) => renderCard(card, i))}
-            <div className="grid w-full grid-cols-2">
-                <span>Email (Just to show I can validate)</span>
-                <InputText
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className={`${validateEmail(email) ? '' : 'border-red-500'} border`}
-                />
-            </div>
+        <div className="flex w-full flex-col justify-between md:w-2/3">
+            <Toast ref={toast} />
+            <SortablePane direction="vertical" className="w-full" margin={16}>
+                {initialCards.map((card) => renderCard(card))}
+            </SortablePane>
+            <Button
+                label="confirm"
+                className="mt-96 border border-slate-200 px-8 py-4"
+                onClick={handleClick}
+            />
         </div>
     )
 }

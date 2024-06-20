@@ -1,6 +1,6 @@
-import update from 'immutability-helper'
-import { ReactNode, useCallback, useState } from 'react'
+import { ReactNode, useCallback } from 'react'
 import WidgetCard from '../WidgetCard'
+import { Pane, SortablePane } from 'react-sortable-pane'
 
 interface Item {
     id: number
@@ -29,37 +29,23 @@ const initialCards: Item[] = [
 ]
 
 export default function WidgetContainer() {
-    const [cards, setCards] = useState<Item[]>(initialCards)
-
-    const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
-        setCards((prevCards: Item[]) =>
-            update(prevCards, {
-                $splice: [
-                    [dragIndex, 1],
-                    [hoverIndex, 0, prevCards[dragIndex] as Item],
-                ],
-            })
-        )
-    }, [])
-
-    const renderCard = useCallback((card: Item, index: number) => {
+    const renderCard = useCallback((card: Item) => {
         return (
-            <WidgetCard
+            <Pane
                 key={card.id}
-                index={index}
-                id={card.id}
-                moveCard={moveCard}
-                title={card.title}
-                subtitle={card.subtitle}
+                defaultSize={{ width: '100%', height: '32%' }}
+                resizable={{ x: false, y: true, xy: false }}
             >
-                {card.body}
-            </WidgetCard>
+                <WidgetCard title={card.title} subtitle={card.subtitle}>
+                    {card.body}
+                </WidgetCard>
+            </Pane>
         )
     }, [])
 
     return (
-        <div className="flex flex-col gap-5">
-            {cards.map((card, i) => renderCard(card, i))}
-        </div>
+        <SortablePane direction="vertical" className="w-full" margin={16}>
+            {initialCards.map((card) => renderCard(card))}
+        </SortablePane>
     )
 }

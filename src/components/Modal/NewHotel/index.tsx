@@ -15,7 +15,7 @@ export default function NewHotel() {
 
     return (
         <Modal open={!!newHotel} onClose={onClose} title="Add new hotel">
-            <div className="flex w-full flex-col items-center gap-5">
+            <div className="flex w-full flex-col items-center gap-5 md:h-[600px]">
                 <img
                     src={hotelPic}
                     alt={newHotel?.HOTEL_NAME}
