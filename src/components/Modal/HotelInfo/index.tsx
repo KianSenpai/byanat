@@ -1,7 +1,7 @@
-import Modal from '../index.tsx'
+import Modal from '../index'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../store'
-import { setHotel } from '../../../store/slices/hotelSlice.ts'
+import { setHotel } from '../../../store/slices/hotelSlice'
 import hotelPic from '../../../assets/hotel.jpeg'
 import { Rating } from 'primereact/rating'
 

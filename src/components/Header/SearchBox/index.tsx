@@ -5,12 +5,12 @@ import {
     AutoCompleteCompleteEvent,
 } from 'primereact/autocomplete'
 import { Button } from 'primereact/button'
-import { SearchIcon } from '../../../assets/icons.tsx'
-import { City } from '../../../assets/types.ts'
+import { SearchIcon } from '../../../assets/icons'
+import { City } from '../../../assets/types'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../../store'
-import { setFilter } from '../../../store/slices/filterSlice.ts'
-import { setSelectedCity } from '../../../store/slices/citySlice.ts'
+import { setFilter } from '../../../store/slices/filterSlice'
+import { setSelectedCity } from '../../../store/slices/citySlice'
 
 const DropdownSection = () => {
     const dispatch = useDispatch<AppDispatch>()

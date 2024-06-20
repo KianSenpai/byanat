@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../store'
-import { setNewHotel } from '../../../store/slices/newHotelSlice.ts'
+import { setNewHotel } from '../../../store/slices/newHotelSlice'
 import hotelPic from '../../../assets/hotel.jpeg'
-import Modal from '../index.tsx'
+import Modal from '../index'
 import FieldContainer from './FieldContainer'
 
 export default function NewHotel() {

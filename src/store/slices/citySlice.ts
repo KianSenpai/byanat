@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { City, CityState } from '../../assets/types.ts'
+import { City, CityState } from '../../assets/types'
 
 const initialState: CityState = {
     selectedCity: [{ name: 'Muscat', code: 'MSC' }],

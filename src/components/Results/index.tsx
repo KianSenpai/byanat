@@ -2,8 +2,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../store'
 import HotelCard from './HotelCard'
 import { DataScroller } from 'primereact/datascroller'
-import { Feature, FeatureProperties } from '../../assets/types.ts'
-import { setHotel } from '../../store/slices/hotelSlice.ts'
+import { Feature, FeatureProperties } from '../../assets/types'
+import { setHotel } from '../../store/slices/hotelSlice'
 import FilterContainer from './FilterContainer'
 import { useState } from 'react'
 
@@ -68,6 +68,8 @@ export default function Results() {
 
                             return hotel.properties?.TYPE === filter
                         })
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-expect-error
                         .sort((a, b) => {
                             if (selectedFilter === 'price') {
                                 return a.properties?.PRICE - b.properties?.PRICE

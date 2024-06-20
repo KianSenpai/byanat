@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { HandleIcon } from '../../../assets/icons.tsx'
+import { HandleIcon } from '../../../assets/icons'
 
 interface IWidgetCard {
     children: ReactNode
