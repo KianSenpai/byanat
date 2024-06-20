@@ -3,7 +3,7 @@ import { Avatar } from 'primereact/avatar'
 
 export default function Profile() {
     return (
-        <div className="flex items-center gap-12">
+        <div className="hidden items-center gap-12 xl:flex">
             <div className="flex items-center gap-1">
                 <PhoneIcon />
                 <span className="font-light">+968 7115 2122</span>
