@@ -43,16 +43,6 @@ export default function MapComponent() {
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        if (city) {
-            const coordinates = initialCoordinates[city[0].name]
-            if (coordinates) {
-                setLng(coordinates[0])
-                setLat(coordinates[1])
-            }
-        }
-    }, [city])
-
     const handleGeoJSONFetch = useCallback(
         async (center: [number, number]) => {
             try {
@@ -228,10 +218,13 @@ export default function MapComponent() {
 
     useEffect(() => {
         if (mapRef.current && city) {
-            mapRef.current.setCenter([lng, lat])
-            handleGeoJSONFetch([lng, lat])
+            const coordinates = initialCoordinates[city[0].name]
+            if (coordinates) {
+                mapRef.current.setCenter(coordinates)
+                handleGeoJSONFetch(coordinates)
+            }
         }
-    }, [handleGeoJSONFetch, city])
+    }, [handleGeoJSONFetch, city, lng, lat])
 
     return (
         <div className="cy-map h-full overflow-hidden rounded-xl">
