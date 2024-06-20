@@ -7,17 +7,22 @@ import HotelInfo from './components/Modal/HotelInfo'
 
 export default function App() {
     return (
-        <div className="h-screen w-screen overflow-scroll bg-slate-50">
+        <div className="h-screen w-screen overflow-hidden bg-slate-50">
             <Header />
-            <Container className="px-8 py-6">
-                <div className="grid w-full grid-cols-5 gap-8">
-                    <div className="col-span-2">
+            <Container className="h-full px-4 py-6">
+                <div
+                    className="grid h-full w-full grid-cols-5 gap-8"
+                    style={{ height: 'calc(100vh - 250px)' }}
+                >
+                    <div className="col-span-2 hidden md:flex">
                         <Results />
                     </div>
-                    <div className="col-span-3 h-full xl:col-span-2">
+                    <div className="col-span-5 h-full md:col-span-3 xl:col-span-2">
                         <MapComponent />
                     </div>
-                    <WidgetContainer />
+                    <div className="hidden xl:flex">
+                        <WidgetContainer />
+                    </div>
                 </div>
                 <HotelInfo />
             </Container>

@@ -5,10 +5,12 @@ import Profile from './Profile'
 
 export default function Header() {
     return (
-        <Container className="sticky top-0 z-50 bg-white px-36 py-5 shadow-md">
-            <div className="flex items-center justify-between">
+        <Container className="bg-white px-4 py-5 shadow-md md:px-36">
+            <div className="flex items-center justify-center xl:justify-between">
                 <div className="flex items-center gap-7">
-                    <Logo />
+                    <div className="hidden md:flex">
+                        <Logo />
+                    </div>
                     <SearchBox />
                 </div>
                 <Profile />
