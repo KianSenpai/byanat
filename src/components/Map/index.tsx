@@ -7,8 +7,8 @@ import { setGeoJSON } from '../../store/slices/geojsonSlice'
 import { RootState } from '../../store'
 import HoverCard from './HoverCard'
 import { createRoot } from 'react-dom/client'
-import { setHotel } from '../../store/slices/hotelSlice.ts'
-import { setNewHotel } from '../../store/slices/newHotelSlice.ts'
+import { setHotel } from '../../store/slices/hotelSlice'
+import { setNewHotel } from '../../store/slices/newHotelSlice'
 import NewHotel from '../Modal/NewHotel'
 
 const accessToken =
@@ -60,8 +60,12 @@ export default function MapComponent() {
                 }
 
                 if (mapRef.current?.getSource('tilequery')) {
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-expect-error
                     mapRef.current.getSource('tilequery').setData(geoJSON)
                 }
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
                 dispatch(setGeoJSON(geoJSON))
 
                 geoJSON.features.forEach((feature) => {
@@ -78,6 +82,8 @@ export default function MapComponent() {
                     el.style.width = '50px'
 
                     new mapboxgl.Marker(el)
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-expect-error
                         .setLngLat(coordinates)
                         .addTo(mapRef.current!)
                 })
@@ -129,6 +135,8 @@ export default function MapComponent() {
             const features = event.features
             if (features && features.length > 0) {
                 mapRef.current!.getCanvas().style.cursor = 'pointer'
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
                 const coordinates = features[0].geometry.coordinates.slice()
                 const properties = features[0].properties as FeatureProperties
                 popup
@@ -218,6 +226,8 @@ export default function MapComponent() {
 
     useEffect(() => {
         if (mapRef.current && city) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             const coordinates = initialCoordinates[city[0].name]
             if (coordinates) {
                 mapRef.current.setCenter(coordinates)

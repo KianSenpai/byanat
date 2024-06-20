@@ -4,7 +4,7 @@ import {
     EntireStudioApartmentIcon,
     ShareWithSuperHostIcon,
     StarIcon,
-} from '../../../assets/icons.tsx'
+} from '../../../assets/icons'
 import hotel from '../../../assets/hotel.jpeg'
 
 interface IHotelCard {

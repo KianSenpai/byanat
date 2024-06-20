@@ -1,5 +1,5 @@
 import Container from '../Container'
-import { Logo } from '../../assets/icons.tsx'
+import { Logo } from '../../assets/icons'
 import SearchBox from './SearchBox'
 import Profile from './Profile'
 

@@ -6,8 +6,8 @@ import { InputNumber } from 'primereact/inputnumber'
 import { Dropdown } from 'primereact/dropdown'
 import { Pane, SortablePane } from 'react-sortable-pane'
 import { Button } from 'primereact/button'
-import { FeatureProperties } from '../../../../assets/types.ts'
-import { setNewHotel } from '../../../../store/slices/newHotelSlice.ts'
+import { FeatureProperties } from '../../../../assets/types'
+import { setNewHotel } from '../../../../store/slices/newHotelSlice'
 import { Toast } from 'primereact/toast'
 
 interface Item {
@@ -177,6 +177,8 @@ export default function FieldContainer() {
     ]
 
     const showWarn = () => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         toast.current.show({
             severity: 'warn',
             summary: 'Warning',

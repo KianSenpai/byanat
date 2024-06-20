@@ -1,4 +1,4 @@
-import { ChevronIcon, PhoneIcon } from '../../../assets/icons.tsx'
+import { ChevronIcon, PhoneIcon } from '../../../assets/icons'
 import { Avatar } from 'primereact/avatar'
 
 export default function Profile() {

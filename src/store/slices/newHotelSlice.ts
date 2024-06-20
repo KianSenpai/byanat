@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { FeatureProperties } from '../../assets/types.ts'
+import { FeatureProperties } from '../../assets/types'
 
 const initialState: { hotel: FeatureProperties | null } = {
     hotel: null,
