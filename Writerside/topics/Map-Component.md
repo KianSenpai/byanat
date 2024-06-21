@@ -3,8 +3,7 @@
 ## Overview
 `MapComponent` is a React component that integrates with Mapbox to display a map with interactive features. It allows users to view markers and popups for specific locations, fetch geoJSON data, and interact with map elements.
 
-## Code Details
-# Imports
+## Imports
 ```typescript
 import mapboxgl, { Map } from 'mapbox-gl'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -20,7 +19,7 @@ import { setNewHotel } from '../../store/slices/newHotelSlice.ts'
 import NewHotel from '../Modal/NewHotel'
 ```
 
-# Constants
+## Constants
 `Access Token`: Token for Mapbox API.\
 `Tile ID`: Mapbox tile ID.\
 `Initial Coordinates`: Default coordinates for specific cities.
@@ -36,7 +35,7 @@ const initialCoordinates = {
 }
 ```
 
-# Fetch GeoJSON Data
+## Fetch GeoJSON Data
 Fetches geoJSON data for a given coordinate.
 
 ```typescript
@@ -51,7 +50,7 @@ const fetchGeoJSON = async (center: [number, number]) => {
 }
 ```
 
-# Main Component
+## Main Component
 ```typescript
 export default function MapComponent() {
     const mapContainerRef = useRef<HTMLDivElement | null>(null)
@@ -74,7 +73,7 @@ export default function MapComponent() {
 }
 ```
 
-# Fetch and Display GeoJSON Data
+## Fetch and Display GeoJSON Data
 Fetches geoJSON data and updates the map.
 ```typescript
  const handleGeoJSONFetch = useCallback(
@@ -123,7 +122,7 @@ Fetches geoJSON data and updates the map.
     )
 ```
 
-# Add Tile Query Source and Layer
+## Add Tile Query Source and Layer
 Configures the map to display the tile query layer.
 
 ```typescript
@@ -181,7 +180,7 @@ Configures the map to display the tile query layer.
     }, [])
 ```
 
-# Initialize Map
+## Initialize Map
 Initializes the map and sets up event listeners.
 
 ```typescript
@@ -233,7 +232,7 @@ Initializes the map and sets up event listeners.
     }, [lng, lat, zoom, handleGeoJSONFetch, addTileQuerySourceAndLayer])
 ```
 
-# Effect Hooks
+## Effect Hooks
 Setup and update the map on component mount and city changes.
 
 ```typescript
