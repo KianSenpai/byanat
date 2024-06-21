@@ -4,7 +4,7 @@ The `WidgetContainer` component renders a list of draggable and resizable widget
 
 ## Imports
 
-```javascript
+```typescript
 import { ReactNode, useCallback } from 'react'
 import WidgetCard from '../WidgetCard'
 import { Pane, SortablePane } from 'react-sortable-pane'
