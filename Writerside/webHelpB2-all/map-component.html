@@ -1,0 +1,231 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en-US" data-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><meta name="built-on" content="2024-06-21T17:51:46.570247"><title>Map Component | byanat</title><script type="application/json" id="virtual-toc-data">[{"id":"overview","level":0,"title":"Overview","anchor":"#overview"},{"id":"imports","level":0,"title":"Imports","anchor":"#imports"},{"id":"constants","level":0,"title":"Constants","anchor":"#constants"},{"id":"fetch-geojson-data","level":0,"title":"Fetch GeoJSON Data","anchor":"#fetch-geojson-data"},{"id":"main-component","level":0,"title":"Main Component","anchor":"#main-component"},{"id":"fetch-and-display-geojson-data","level":0,"title":"Fetch and Display GeoJSON Data","anchor":"#fetch-and-display-geojson-data"},{"id":"add-tile-query-source-and-layer","level":0,"title":"Add Tile Query Source and Layer","anchor":"#add-tile-query-source-and-layer"},{"id":"initialize-map","level":0,"title":"Initialize Map","anchor":"#initialize-map"},{"id":"effect-hooks","level":0,"title":"Effect Hooks","anchor":"#effect-hooks"}]</script><script type="application/json" id="topic-shortcuts"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b267/app.css" rel="stylesheet"><meta name="msapplication-TileColor" content="#000000"><link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"><meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="Map Component | byanat"><meta property="og:description" content=""><meta property="og:image" content=""><meta property="og:site_name" content="byanat Help"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:url" content="writerside-documentation/map-component.html"><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="Map Component | byanat"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json">{
+    "@context": "http://schema.org",
+    "@type": "WebPage",
+    "@id": "writerside-documentation/map-component.html#webpage",
+    "url": "writerside-documentation/map-component.html",
+    "name": "Map Component | byanat",
+    "description": "",
+    "image": "",
+    "inLanguage":"en-US"
+}</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json">{
+    "@type": "WebSite",
+    "@id": "writerside-documentation/#website",
+    "url": "writerside-documentation/",
+    "name": "byanat Help"
+}</script><!-- End Schema.org --></head><body data-id="Map-Component" data-main-title="Map Component" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}" data-template="article" data-breadcrumbs="starter-topic.md|Byanat"><div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>byanat  Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Map-Component" id="Map-Component.md">Map Component</h1><section class="chapter"><h2 id="overview" data-toc="overview">Overview</h2><p id="enz61o_22"><code class="code" id="enz61o_23">MapComponent</code> is a React component that integrates with Mapbox to display a map with interactive features. It allows users to view markers and popups for specific locations, fetch geoJSON data, and interact with map elements.</p></section><section class="chapter"><h2 id="imports" data-toc="imports">Imports</h2><div class="code-block" data-lang="ts">
+import mapboxgl, { Map } from 'mapbox-gl'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import 'mapbox-gl/dist/mapbox-gl.css'
+import { FeatureProperties, GeoJSONResponse } from '../../assets/types'
+import { useDispatch, useSelector } from 'react-redux'
+import { setGeoJSON } from '../../store/slices/geojsonSlice'
+import { RootState } from '../../store'
+import HoverCard from './HoverCard'
+import { createRoot } from 'react-dom/client'
+import { setHotel } from '../../store/slices/hotelSlice.ts'
+import { setNewHotel } from '../../store/slices/newHotelSlice.ts'
+import NewHotel from '../Modal/NewHotel'
+</div></section><section class="chapter"><h2 id="constants" data-toc="constants">Constants</h2><p id="enz61o_25"><code class="code" id="enz61o_26">Access Token</code>: Token for Mapbox API. <br><code class="code" id="enz61o_28">Tile ID</code>: Mapbox tile ID. <br><code class="code" id="enz61o_30">Initial Coordinates</code>: Default coordinates for specific cities.</p><div class="code-block" data-lang="ts">
+const accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN'
+const tileID = 'YOUR_TILE_ID'
+
+const initialCoordinates = {
+    Muscat: [58.38, 23.58],
+    Dubai: [55.27, 25.2],
+    Tehran: [51.37, 35.74],
+}
+</div></section><section class="chapter"><h2 id="fetch-geojson-data" data-toc="fetch-geojson-data">Fetch GeoJSON Data</h2><p id="enz61o_32">Fetches geoJSON data for a given coordinate.</p><div class="code-block" data-lang="ts">
+const fetchGeoJSON = async (center: [number, number]) =&gt; {
+    const radius = 100000000
+    const limit = 50
+    const query = await fetch(
+        `https://api.mapbox.com/v4/${tileID}/tilequery/${center[0]},${center[1]}.json?radius=${radius}&amp;limit=${limit}&amp;access_token=${accessToken}`,
+        { method: 'GET' }
+    )
+    return await query.json()
+}
+</div></section><section class="chapter"><h2 id="main-component" data-toc="main-component">Main Component</h2><div class="code-block" data-lang="ts">
+export default function MapComponent() {
+    const mapContainerRef = useRef&lt;HTMLDivElement | null&gt;(null)
+    const mapRef = useRef&lt;Map | null&gt;(null)
+    const [lng, setLng] = useState&lt;number&gt;(initialCoordinates.Muscat[0])
+    const [lat, setLat] = useState&lt;number&gt;(initialCoordinates.Muscat[1])
+    const [zoom, setZoom] = useState&lt;number&gt;(12)
+    const city = useSelector((state: RootState) =&gt; state.city.selectedCity)
+    const dispatch = useDispatch()
+
+    useEffect(() =&gt; {
+        if (city) {
+            const coordinates = initialCoordinates[city[0].name]
+            if (coordinates) {
+                setLng(coordinates[0])
+                setLat(coordinates[1])
+            }
+        }
+    }, [city])
+}
+</div></section><section class="chapter"><h2 id="fetch-and-display-geojson-data" data-toc="fetch-and-display-geojson-data">Fetch and Display GeoJSON Data</h2><p id="enz61o_35">Fetches geoJSON data and updates the map.</p><div class="code-block" data-lang="ts">
+ const handleGeoJSONFetch = useCallback(
+        async (center: [number, number]) =&gt; {
+            try {
+                const json: GeoJSONResponse = await fetchGeoJSON(center)
+                const geoJSON = {
+                    type: 'FeatureCollection',
+                    features: json.features.map((feature) =&gt; ({
+                        type: 'Feature',
+                        geometry: {
+                            type: 'Point',
+                            coordinates: feature.geometry.coordinates,
+                        },
+                        properties: feature.properties,
+                    })),
+                }
+
+                if (mapRef.current?.getSource('tilequery')) {
+                    mapRef.current.getSource('tilequery').setData(geoJSON)
+                }
+                dispatch(setGeoJSON(geoJSON))
+
+                geoJSON.features.forEach((feature) =&gt; {
+                    const coordinates = feature.geometry.coordinates
+                    const properties = feature.properties as FeatureProperties
+                    const el = document.createElement('div')
+                    el.className = 'marker'
+                    el.style.backgroundColor = 'white'
+                    el.style.border = '1px solid gray'
+                    el.style.padding = '5px'
+                    el.style.borderRadius = '5px'
+                    el.innerHTML = `$${properties.PRICE}`
+                    el.style.textAlign = 'center'
+                    el.style.width = '50px'
+
+                    new mapboxgl.Marker(el)
+                        .setLngLat(coordinates)
+                        .addTo(mapRef.current!)
+                })
+            } catch (error) {
+                console.error('Error fetching tile query results:', error)
+            }
+        },
+        [dispatch, city]
+    )
+</div></section><section class="chapter"><h2 id="add-tile-query-source-and-layer" data-toc="add-tile-query-source-and-layer">Add Tile Query Source and Layer</h2><p id="enz61o_37">Configures the map to display the tile query layer.</p><div class="code-block" data-lang="ts">
+    const addTileQuerySourceAndLayer = useCallback(() =&gt; {
+        if (!mapRef.current) return
+
+        mapRef.current.addSource('tilequery', {
+            type: 'geojson',
+            data: {
+                type: 'FeatureCollection',
+                features: [],
+            },
+        })
+
+        const popup = new mapboxgl.Popup()
+
+        mapRef.current.on('mouseenter', 'tilequery-points', (event) =&gt; {
+            const features = event.features
+            if (features &amp;&amp; features.length &gt; 0) {
+                mapRef.current!.getCanvas().style.cursor = 'pointer'
+                const coordinates = features[0].geometry.coordinates.slice()
+                const properties = features[0].properties as FeatureProperties
+                popup
+                    .setLngLat(coordinates)
+                    .setDOMContent(
+                        (() =&gt; {
+                            const container = document.createElement('div')
+                            const root = createRoot(container)
+                            root.render(
+                                &lt;HoverCard
+                                    bedroom={properties.BEDROOMS}
+                                    bathroom={properties.BATHROOMS}
+                                    price={properties.PRICE}
+                                /&gt;
+                            )
+                            return container
+                        })()
+                    )
+                    .addTo(mapRef.current!)
+            }
+        })
+
+        mapRef.current.on('mouseleave', 'tilequery-points', () =&gt; {
+            mapRef.current!.getCanvas().style.cursor = ''
+            popup.remove()
+        })
+
+        mapRef.current.on('click', 'tilequery-points', (event) =&gt; {
+            const features = event.features
+            if (features &amp;&amp; features.length &gt; 0) {
+                const properties = features[0].properties as FeatureProperties
+                dispatch(setHotel(properties))
+            }
+        })
+    }, [])
+</div></section><section class="chapter"><h2 id="initialize-map" data-toc="initialize-map">Initialize Map</h2><p id="enz61o_39">Initializes the map and sets up event listeners.</p><div class="code-block" data-lang="ts">
+    const initializeMap = useCallback(() =&gt; {
+        if (mapRef.current) return
+
+        mapRef.current = new mapboxgl.Map({
+            container: mapContainerRef.current!,
+            style: 'mapbox://styles/mapbox/streets-v12',
+            center: [lng, lat],
+            zoom: zoom,
+            accessToken,
+        })
+
+        mapRef.current.on('load', () =&gt; {
+            addTileQuerySourceAndLayer()
+            handleGeoJSONFetch([lng, lat])
+        })
+
+        mapRef.current.on('move', () =&gt; {
+            const { lng, lat } = mapRef.current!.getCenter()
+            setLng(Number(lng.toFixed(4)))
+            setLat(Number(lat.toFixed(4)))
+            setZoom(Number(mapRef.current!.getZoom().toFixed(2)))
+        })
+
+        mapRef.current!.on('style.load', () =&gt; {
+            mapRef.current!.on('dblclick', (e) =&gt; {
+                const coordinates = e.lngLat
+                dispatch(
+                    setNewHotel({
+                        latitude: coordinates.lat,
+                        longitude: coordinates.lng,
+                        ADDRESS_LINE1: '',
+                        BATHROOMS: 0,
+                        BEDROOMS: 0,
+                        CITY: '',
+                        COUNTRY: '',
+                        GUESTS: 0,
+                        HOTEL_NAME: '',
+                        NBHD_NAME: '',
+                        PRICE: 100,
+                        RATING: 5,
+                        TYPE: '',
+                    })
+                )
+            })
+        })
+    }, [lng, lat, zoom, handleGeoJSONFetch, addTileQuerySourceAndLayer])
+</div></section><section class="chapter"><h2 id="effect-hooks" data-toc="effect-hooks">Effect Hooks</h2><p id="enz61o_41">Setup and update the map on component mount and city changes.</p><div class="code-block" data-lang="ts">
+    useEffect(() =&gt; {
+        initializeMap()
+    }, [initializeMap])
+
+    useEffect(() =&gt; {
+        if (mapRef.current &amp;&amp; city) {
+            mapRef.current.setCenter([lng, lat])
+            handleGeoJSONFetch([lng, lat])
+        }
+    }, [handleGeoJSONFetch, city])
+
+    return (
+        &lt;div className=&quot;cy-map h-full overflow-hidden rounded-xl&quot;&gt;
+            &lt;div ref={mapContainerRef} className=&quot;h-full&quot; /&gt;
+            &lt;NewHotel /&gt;
+        &lt;/div&gt;
+    )
+</div></section><div class="last-modified">Last modified: 21 June 2024</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom"><a href="widget-container-component.html" class="navigation-links__prev">Widget Container Component</a></div></article><div id="disqus_thread"></div></div></section></main></div><script src="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b267/app.js"></script></body></html>

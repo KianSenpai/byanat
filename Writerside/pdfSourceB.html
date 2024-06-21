@@ -1,0 +1,591 @@
+<html><head><meta charset="UTF-8"><script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-bash.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-javascript.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-ts.min.js"></script><style>
+        .article {
+            position: relative;
+            padding-bottom: 24px;
+        }
+        
+
+        .code-block {
+            overflow: hidden;
+            position: relative;
+            padding: 0;
+            border-radius: 8px;
+            font-variant-ligatures: none;
+            background-color: rgba(25, 25, 28, .05);
+            word-break: break-all;
+        }
+        
+
+        .control {
+            color: #19191c;
+            font-size: 16px;
+            font-weight: 670;
+        }
+        
+
+        .detached {
+            margin-block-start: 0;
+            margin-block-end: 0;
+            margin-bottom: 8px;
+        }
+        
+
+        .inline-code {
+            border-radius: 4px;
+            display: inline;
+            padding: 2px 1px;
+            font-family: JetBrains Sans,monospace;
+            background: #e6e6e6;
+        }
+        
+
+        .list {
+            list-style-type: disc;
+            padding-left: 0;
+            margin-left: 15px;
+        }
+        
+
+        .list-item {
+            margin-top: 6px;
+            margin-bottom: 6px;
+            margin-left: 4px;
+        }
+        
+
+        .main-title {
+            padding-bottom: 24px;
+            margin-top: 0;
+            font-size: 40px;
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+        
+
+        .prism {
+            page-break-inside: avoid;
+        }
+        
+        /* PrismJS 1.29.0
+https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript+abap+abnf+actionscript+ada+agda+al+antlr4+apacheconf+apex+apl+applescript+aql+arduino+arff+armasm+arturo+asciidoc+aspnet+asm6502+asmatmel+autohotkey+autoit+avisynth+avro-idl+awk+bash+basic+batch+bbcode+bbj+bicep+birb+bison+bnf+bqn+brainfuck+brightscript+bro+bsl+c+csharp+cpp+cfscript+chaiscript+cil+cilkc+cilkcpp+clojure+cmake+cobol+coffeescript+concurnas+csp+cooklang+coq+crystal+css-extras+csv+cue+cypher+d+dart+dataweave+dax+dhall+diff+django+dns-zone-file+docker+dot+ebnf+editorconfig+eiffel+ejs+elixir+elm+etlua+erb+erlang+excel-formula+fsharp+factor+false+firestore-security-rules+flow+fortran+ftl+gml+gap+gcode+gdscript+gedcom+gettext+gherkin+git+glsl+gn+linker-script+go+go-module+gradle+graphql+groovy+haml+handlebars+haskell+haxe+hcl+hlsl+hoon+http+hpkp+hsts+ichigojam+icon+icu-message-format+idris+ignore+inform7+ini+io+j+java+javadoc+javadoclike+javastacktrace+jexl+jolie+jq+jsdoc+js-extras+json+json5+jsonp+jsstacktrace+js-templates+julia+keepalived+keyman+kotlin+kumir+kusto+latex+latte+less+lilypond+liquid+lisp+livescript+llvm+log+lolcode+lua+magma+makefile+markdown+markup-templating+mata+matlab+maxscript+mel+mermaid+metafont+mizar+mongodb+monkey+moonscript+n1ql+n4js+nand2tetris-hdl+naniscript+nasm+neon+nevod+nginx+nim+nix+nsis+objectivec+ocaml+odin+opencl+openqasm+oz+parigp+parser+pascal+pascaligo+psl+pcaxis+peoplecode+perl+php+phpdoc+php-extras+plant-uml+plsql+powerquery+powershell+processing+prolog+promql+properties+protobuf+pug+puppet+pure+purebasic+purescript+python+qsharp+q+qml+qore+r+racket+cshtml+jsx+tsx+reason+regex+rego+renpy+rescript+rest+rip+roboconf+robotframework+ruby+rust+sas+sass+scss+scala+scheme+shell-session+smali+smalltalk+smarty+sml+solidity+solution-file+soy+sparql+splunk-spl+sqf+sql+squirrel+stan+stata+iecst+stylus+supercollider+swift+systemd+t4-templating+t4-cs+t4-vb+tap+tcl+tt2+textile+toml+tremor+turtle+twig+typescript+typoscript+unrealscript+uorazor+uri+v+vala+vbnet+velocity+verilog+vhdl+vim+visual-basic+warpscript+wasm+web-idl+wgsl+wiki+wolfram+wren+xeora+xml-doc+xojo+xquery+yaml+yang+zig&plugins=highlight-keywords */
+code[class*=language-],pre[class*=language-]{color:#000;background:0 0;text-shadow:0 1px #fff;font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;font-size:1em;text-align:left;white-space:pre-wrap;word-spacing:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}code[class*=language-] ::-moz-selection,code[class*=language-]::-moz-selection,pre[class*=language-] ::-moz-selection,pre[class*=language-]::-moz-selection{text-shadow:none;background:#b3d4fc}code[class*=language-] ::selection,code[class*=language-]::selection,pre[class*=language-] ::selection,pre[class*=language-]::selection{text-shadow:none;background:#b3d4fc}@media print{code[class*=language-],pre[class*=language-]{text-shadow:none}}pre[class*=language-]{padding:16px;margin:0;overflow:auto}:not(pre)>code[class*=language-],pre[class*=language-]{background:#f5f2f0}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#708090}.token.punctuation{color:#999}.token.namespace{opacity:.7}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#905}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#690}.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url{color:#9a6e3a;background:hsla(0,0%,100%,.5)}.token.atrule,.token.attr-value,.token.keyword{color:#07a}.token.class-name,.token.function{color:#dd4a68}.token.important,.token.regex,.token.variable{color:#e90}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}
+
+        
+
+        :root {
+            width: 95%;
+            max-width: 95vw;
+            padding: 0 0 0 30px;
+        }
+        
+        body {
+            font-family: JetBrains Sans,serif;
+        }
+        
+        a {
+            overflow-wrap: anywhere;
+            width: 100vw;
+        }
+        
+        
+        @font-face {
+            font-family: JetBrains Sans;
+            src: url(https://resources.jetbrains.com/storage/jetbrains-sans/JetBrainsSans-Light.woff2) format("woff2"), url(https://resources.jetbrains.com/storage/jetbrains-sans/JetBrainsSans-Light.woff) format("woff");
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: JetBrains Sans;
+            src: url(https://resources.jetbrains.com/storage/jetbrains-sans/JetBrainsSans-Regular.woff2) format("woff2"), url(https://resources.jetbrains.com/storage/jetbrains-sans/JetBrainsSans-Regular.woff) format("woff");
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: JetBrains Sans;
+            src: url(https://resources.jetbrains.com/storage/jetbrains-sans/JetBrainsSans-SemiBold.woff2) format("woff2"), url(https://resources.jetbrains.com/storage/jetbrains-sans/JetBrainsSans-SemiBold.woff) format("woff");
+            font-weight: 600;
+            font-style: normal;
+        }
+        
+        
+        code {
+            display: inline;
+            word-break: break-word;
+            font-size: 15px;
+            line-height: inherit;
+            font-variant-ligatures: none;
+            font-family: JetBrains Sans,monospace;
+            white-space: pre-line;
+            overflow-wrap: break-word;
+        }
+        
+        figcaption {
+            margin-top: 5px;
+        }
+        
+        h2 {
+            padding-top: 16px;
+            padding-bottom: 8px;
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+        
+        h3 {
+            padding-top: 8px;
+            padding-bottom: 8px;
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+        
+        h4 {
+            padding-top: 4px;
+            padding-bottom: 8px;
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+        
+        p {
+            padding: 0;
+            border: 0;
+            line-height: 25px;
+            margin-block-start: 0;
+            margin-block-end: 0;
+            padding-bottom: 8px;
+        }
+        
+        div {
+            display: block;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            page-break-inside: avoid;
+        }
+        
+        th, td {
+            border: 1px solid #c4c4c4;
+            padding: 10px;
+            text-align: left;
+            word-break: break-all;
+        }
+        
+        .entry {
+            display: grid;
+            grid-template-columns: auto max-content;
+            grid-template-areas: "chapter page";
+            align-items: end;
+            gap: 0 .25rem;
+            line-height: 25px;
+        }
+        
+        .toc-link-container{
+            grid-area: chapter;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .toc-link{
+            text-decoration: none;
+            color: black;
+        }
+        
+        .toc-link-container::after {
+            position: absolute;
+            padding-left: .25ch;
+            content: " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . "
+            ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . "
+            ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ";
+            text-align: right;
+        }
+        
+        .page {
+            grid-area: page;
+            width: 30px;
+            text-align: right;
+        }
+        
+
+        .topic {
+            page-break-before: always;
+        }
+        </style></head><body><div><section class="topic"><div><article class="article"><h1 class="main-title">Table of contents</h1><div class="entry"><div class="toc-link-container"><a class="toc-link" href="#-512279951">Byanat</a></div><div class="page">2</div></div><div class="entry"><div class="toc-link-container"><a class="toc-link" href="#-921612298">Search Box Component</a></div><div class="page">3</div></div><div class="entry"><div class="toc-link-container"><a class="toc-link" href="#686694792">Widget Container Component</a></div><div class="page">9</div></div><div class="entry"><div class="toc-link-container"><a class="toc-link" href="#-525274740">Map Component</a></div><div class="page">12</div></div></article></div></section><section class="topic"><div><article class="article"><h1 class="main-title" id="-512279951">Byanat</h1><p id="-512279951#i8l8www_2">To run the project, you have to run:</p><div class="detached code-block" id="-512279951#i8l8www_3"><pre><code class="language-bash">npm install</code></pre></div><p id="-512279951#i8l8www_4">And after that, run:</p><div class="detached code-block" id="-512279951#i8l8www_5"><pre><code class="language-bash">npm run dev</code></pre></div><p id="-512279951#i8l8www_6">And to test the app, run:</p><div class="detached code-block" id="-512279951#i8l8www_7"><pre><code class="language-bash">npx cypress open</code></pre></div></article></div></section><section class="topic"><div><article class="article"><h1 class="main-title" id="-921612298">Search Box Component</h1><p id="-921612298#ppbwnp_2">The <span class="inline-code" id="-921612298#ppbwnp_3">SearchBox</span> component provides a user interface for selecting filters and searching for cities. It comprises two main sections: a dropdown for selecting filters and an autocomplete input for searching cities.</p><section><h2 id="-921612298#imports" data-toc="imports#Search-Box-Component.md-imports">Imports</h2><div class="detached code-block" id="-921612298#ppbwnp_4"><pre><code class="language-ts">import { Dropdown } from 'primereact/dropdown'
+import { useState } from 'react'
+import {
+    AutoComplete,
+    AutoCompleteCompleteEvent,
+} from 'primereact/autocomplete'
+import { Button } from 'primereact/button'
+import { SearchIcon } from '../../../assets/icons'
+import { City } from '../../../assets/types'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../../store'
+import { setFilter } from '../../../store/slices/filterSlice'
+import { setSelectedCity } from '../../../store/slices/citySlice'</code></pre></div></section><section><h2 id="-921612298#dropdownsection-component" data-toc="dropdownsection-component#Search-Box-Component.md-dropdownsection-component">DropdownSection Component</h2><p id="-921612298#ppbwnp_5">The <span class="inline-code" id="-921612298#ppbwnp_6">DropdownSection</span> component renders a dropdown menu for selecting filters.</p><div class="detached code-block" id="-921612298#ppbwnp_7"><pre><code class="language-ts">const DropdownSection = () =&gt; {
+    const dispatch = useDispatch&lt;AppDispatch&gt;()
+    const selectedFilter = useSelector(
+        (state: RootState) =&gt; state.filter.selectedFilter
+    )
+
+    const groupedFilters = [
+        {
+            label: 'Type',
+            items: [
+                {
+                    label: 'Entire Studio Apartment',
+                    value: 'Entire Studio Apartment',
+                },
+                { label: 'Entire Home', value: 'Entire Home' },
+                {
+                    label: 'Share with Super Host',
+                    value: 'Share with Super Host',
+                },
+            ],
+        },
+        {
+            label: 'Rating',
+            items: [
+                { label: 'Less than 3', value: '3' },
+                { label: 'Between 3 and 4', value: '4' },
+                { label: 'More than 4', value: '5' },
+            ],
+        },
+    ]
+
+    const groupedItemTemplate = (option: { label: string }) =&gt; (
+        &lt;div className=&quot;align-items-center flex&quot;&gt;
+            &lt;div&gt;{option.label}&lt;/div&gt;
+        &lt;/div&gt;
+    )
+
+    const handleChange = (e: { value: string }) =&gt; {
+        dispatch(setFilter(e.value))
+    }
+
+    return (
+        &lt;Dropdown
+            value={selectedFilter}
+            onChange={handleChange}
+            options={groupedFilters}
+            optionLabel=&quot;label&quot;
+            optionGroupLabel=&quot;label&quot;
+            optionGroupChildren=&quot;items&quot;
+            optionGroupTemplate={groupedItemTemplate}
+            className=&quot;max-w-[150px] md:w-[250px]&quot;
+        /&gt;
+    )
+}</code></pre></div><ul class="list" id="-921612298#ppbwnp_8" start="1"><li class="list-item" id="-921612298#ppbwnp_9"><p><span class="control" id="-921612298#ppbwnp_10">selectedFilter</span>: The currently selected filter, retrieved from the Redux store.</p></li><li class="list-item" id="-921612298#ppbwnp_11"><p><span class="control" id="-921612298#ppbwnp_12">groupedFilters</span>: The filter options grouped by categories such as &quot;Type&quot; and &quot;Rating&quot;.</p></li><li class="list-item" id="-921612298#ppbwnp_13"><p><span class="control" id="-921612298#ppbwnp_14">groupedItemTemplate</span>: Template for rendering each grouped item.</p></li><li class="list-item" id="-921612298#ppbwnp_15"><p><span class="control" id="-921612298#ppbwnp_16">handleChange</span>: Dispatches the selected filter to the Redux store.</p></li></ul></section><section><h2 id="-921612298#searchsection-component" data-toc="searchsection-component#Search-Box-Component.md-searchsection-component">SearchSection Component</h2><p id="-921612298#ppbwnp_17">The <span class="inline-code" id="-921612298#ppbwnp_18">SearchSection</span> component provides an autocomplete input for searching and selecting cities.</p><div class="detached code-block" id="-921612298#ppbwnp_19"><pre><code class="language-ts">const SearchSection = () =&gt; {
+    const dispatch = useDispatch()
+    const selectedCity = useSelector(
+        (state: RootState) =&gt; state.city.selectedCity
+    )
+
+    const cities: City[] = [
+        { name: 'Dubai', code: 'DXB' },
+        { name: 'Muscat', code: 'MSC' },
+        { name: 'Tehran', code: 'TEH' },
+    ]
+
+    const [filteredCities, setFilteredCities] = useState&lt;City[] | undefined&gt;(
+        undefined
+    )
+
+    const search = (event: AutoCompleteCompleteEvent) =&gt; {
+        let _filteredCountries: City[]
+
+        if (!event.query.trim().length) {
+            _filteredCountries = [...cities]
+        } else {
+            _filteredCountries = cities.filter((city) =&gt;
+                city.name.toLowerCase().includes(event.query.toLowerCase())
+            )
+        }
+
+        setFilteredCities(_filteredCountries)
+    }
+
+    const handleCityChange = (e: { value: City[] }) =&gt; {
+        if (e.value.length &gt; 0) {
+            const lastSelectedCity = e.value[e.value.length - 1]
+            dispatch(setSelectedCity([lastSelectedCity]))
+        }
+    }
+
+    return (
+        &lt;AutoComplete
+            field=&quot;name&quot;
+            multiple
+            value={selectedCity}
+            suggestions={filteredCities}
+            completeMethod={search}
+            onChange={handleCityChange}
+            className=&quot;w-full min-w-full&quot;
+            pt={{ root: { overflow: 'scroll', width: '100%' } }}
+        /&gt;
+    )
+}</code></pre></div><ul class="list" id="-921612298#ppbwnp_20" start="1"><li class="list-item" id="-921612298#ppbwnp_21"><p><span class="control" id="-921612298#ppbwnp_22">selectedCity</span>: The currently selected city, retrieved from the Redux store.</p></li><li class="list-item" id="-921612298#ppbwnp_23"><p><span class="control" id="-921612298#ppbwnp_24">cities</span>: List of available cities to search.</p></li><li class="list-item" id="-921612298#ppbwnp_25"><p><span class="control" id="-921612298#ppbwnp_26">filteredCities</span>: The list of cities filtered based on the search query.</p></li><li class="list-item" id="-921612298#ppbwnp_27"><p><span class="control" id="-921612298#ppbwnp_28">search</span>: Filters the cities based on the user's search query.</p></li><li class="list-item" id="-921612298#ppbwnp_29"><p><span class="control" id="-921612298#ppbwnp_30">handleCityChange</span>: Dispatches the selected city to the Redux store.</p></li></ul></section><section><h2 id="-921612298#main-component" data-toc="main-component#Search-Box-Component.md-main-component">Main Component</h2><p id="-921612298#ppbwnp_31">The <span class="inline-code" id="-921612298#ppbwnp_32">SearchBox</span> component combines the <span class="inline-code" id="-921612298#ppbwnp_33">DropdownSection</span> and <span class="inline-code" id="-921612298#ppbwnp_34">SearchSection</span> components and adds a search button.</p><div class="detached code-block" id="-921612298#ppbwnp_35"><pre><code class="language-ts">export default function SearchBox() {
+    return (
+        &lt;div className=&quot;cy-searchbox flex h-14 w-full lg:w-[600px]&quot;&gt;
+            &lt;div className=&quot;flex w-full rounded-l-md border-y border-l border-slate-300&quot;&gt;
+                &lt;DropdownSection /&gt;
+                &lt;SearchSection /&gt;
+            &lt;/div&gt;
+            &lt;Button
+                aria-label=&quot;Search&quot;
+                className=&quot;flex h-14 w-14 items-center justify-center rounded-l-none bg-[#5E81F4]&quot;
+            &gt;
+                &lt;SearchIcon /&gt;
+            &lt;/Button&gt;
+        &lt;/div&gt;
+    )
+}</code></pre></div><ul class="list" id="-921612298#ppbwnp_36" start="1"><li class="list-item" id="-921612298#ppbwnp_37"><p>Combines the <span class="inline-code" id="-921612298#ppbwnp_38">DropdownSection</span> and <span class="inline-code" id="-921612298#ppbwnp_39">SearchSection</span> components.</p></li><li class="list-item" id="-921612298#ppbwnp_40"><p>Includes a search button with an icon.</p></li></ul></section><section><h2 id="-921612298#redux-integration" data-toc="redux-integration#Search-Box-Component.md-redux-integration">Redux Integration</h2><p id="-921612298#ppbwnp_41">This component relies on Redux for state management. Ensure that the <span class="inline-code" id="-921612298#ppbwnp_42">filterSlice</span> and <span class="inline-code" id="-921612298#ppbwnp_43">citySlice</span> are properly set up in your Redux store.</p></section><section><h2 id="-921612298#dependencies" data-toc="dependencies#Search-Box-Component.md-dependencies">Dependencies</h2><ul class="list" id="-921612298#ppbwnp_44" start="1"><li class="list-item" id="-921612298#ppbwnp_45"><p><span class="inline-code" id="-921612298#ppbwnp_46">primereact/dropdown</span></p></li><li class="list-item" id="-921612298#ppbwnp_47"><p><span class="inline-code" id="-921612298#ppbwnp_48">primereact/autocomplete</span></p></li><li class="list-item" id="-921612298#ppbwnp_49"><p><span class="inline-code" id="-921612298#ppbwnp_50">primereact/button</span></p></li><li class="list-item" id="-921612298#ppbwnp_51"><p>Redux setup with <span class="inline-code" id="-921612298#ppbwnp_52">react-redux</span></p></li></ul></section></article></div></section><section class="topic"><div><article class="article"><h1 class="main-title" id="686694792">Widget Container Component</h1><p id="686694792#d7ohnh_2">The <span class="inline-code" id="686694792#d7ohnh_3">WidgetContainer</span> component renders a list of draggable and resizable widgets in a vertical pane.</p><section><h2 id="686694792#imports" data-toc="imports#Widget-Container-Component.md-imports">Imports</h2><div class="detached code-block" id="686694792#d7ohnh_4"><pre><code class="language-ts">import { ReactNode, useCallback } from 'react'
+import WidgetCard from '../WidgetCard'
+import { Pane, SortablePane } from 'react-sortable-pane'</code></pre></div></section><section><h2 id="686694792#interface" data-toc="interface#Widget-Container-Component.md-interface">Interface</h2><div class="detached code-block" id="686694792#d7ohnh_5"><pre><code class="language-ts">interface Item {
+    id: number
+    body: ReactNode
+    title?: string
+    subtitle?: string
+}</code></pre></div><ul class="list" id="686694792#d7ohnh_6" start="1"><li class="list-item" id="686694792#d7ohnh_7"><p><span class="control" id="686694792#d7ohnh_8">Item</span>: Defines the structure of each card. </p><ul class="list" id="686694792#d7ohnh_9" start="1"><li class="list-item" id="686694792#d7ohnh_10"><p><span class="inline-code" id="686694792#d7ohnh_11">id</span>: Unique identifier for the card (number).</p></li><li class="list-item" id="686694792#d7ohnh_12"><p><span class="inline-code" id="686694792#d7ohnh_13">body</span>: Content of the card (ReactNode).</p></li><li class="list-item" id="686694792#d7ohnh_14"><p><span class="inline-code" id="686694792#d7ohnh_15">title</span> (optional): Title of the card (string).</p></li><li class="list-item" id="686694792#d7ohnh_16"><p><span class="inline-code" id="686694792#d7ohnh_17">subtitle</span> (optional): Subtitle of the card (string).</p></li></ul></li></ul></section><section><h2 id="686694792#initial-cards" data-toc="initial-cards#Widget-Container-Component.md-initial-cards">Initial Cards</h2><div class="detached code-block" id="686694792#d7ohnh_18"><pre><code class="language-ts">const initialCards: Item[] = [
+    {
+        id: 1,
+        body: &lt;div&gt;hello&lt;/div&gt;,
+        title: 'P&amp;L',
+        subtitle: 'Total profit growth of 25%',
+    },
+    {
+        id: 2,
+        body: &lt;div&gt;hello&lt;/div&gt;,
+        title: 'Current Plan',
+        subtitle: 'Information and usages of your current plan',
+    },
+    {
+        id: 3,
+        body: &lt;div&gt;hello&lt;/div&gt;,
+    },
+]</code></pre></div><ul class="list" id="686694792#d7ohnh_19" start="1"><li class="list-item" id="686694792#d7ohnh_20"><p><span class="control" id="686694792#d7ohnh_21">initialCards</span>: Array of card objects to be rendered initially.</p></li></ul></section><section><h2 id="686694792#main-component" data-toc="main-component#Widget-Container-Component.md-main-component">Main Component</h2><div class="detached code-block" id="686694792#d7ohnh_22"><pre><code class="language-javascript">export default function WidgetContainer() {
+    const renderCard = useCallback((card: Item) =&gt; {
+        return (
+            &lt;Pane
+                key={card.id}
+                defaultSize={{ width: '100%', height: '32%' }}
+                resizable={{ x: false, y: true, xy: false }}
+            &gt;
+                &lt;WidgetCard title={card.title} subtitle={card.subtitle}&gt;
+                    {card.body}
+                &lt;/WidgetCard&gt;
+            &lt;/Pane&gt;
+        )
+    }, [])
+
+    return (
+        &lt;SortablePane direction=&quot;vertical&quot; className=&quot;w-full&quot; margin={16}&gt;
+            {initialCards.map((card) =&gt; renderCard(card))}
+        &lt;/SortablePane&gt;
+    )
+}</code></pre></div><ul class="list" id="686694792#d7ohnh_23" start="1"><li class="list-item" id="686694792#d7ohnh_24"><p id="686694792#d7ohnh_25"><span class="control" id="686694792#d7ohnh_26">WidgetContainer</span>: Main component rendering the sortable pane with the cards.</p><ul class="list" id="686694792#d7ohnh_27" start="1"><li class="list-item" id="686694792#d7ohnh_28"><p>Uses <span class="inline-code" id="686694792#d7ohnh_29">useCallback</span> to memoize the card rendering logic.</p></li><li class="list-item" id="686694792#d7ohnh_30"><p>Maps over <span class="inline-code" id="686694792#d7ohnh_31">initialCards</span> to render each card using the <span class="inline-code" id="686694792#d7ohnh_32">renderCard</span> function.</p></li></ul></li><li class="list-item" id="686694792#d7ohnh_33"><p id="686694792#d7ohnh_34"><span class="control" id="686694792#d7ohnh_35">Items</span>: Each item contains an <span class="inline-code" id="686694792#d7ohnh_36">id</span>, a <span class="inline-code" id="686694792#d7ohnh_37">body</span> (ReactNode), and optionally a <span class="inline-code" id="686694792#d7ohnh_38">title</span> and <span class="inline-code" id="686694792#d7ohnh_39">subtitle</span>.</p></li><li class="list-item" id="686694792#d7ohnh_40"><p id="686694792#d7ohnh_41"><span class="control" id="686694792#d7ohnh_42">SortablePane</span>: Used to create a container that allows sorting of the cards vertically.</p></li><li class="list-item" id="686694792#d7ohnh_43"><p id="686694792#d7ohnh_44"><span class="control" id="686694792#d7ohnh_45">Pane</span>: A wrapper for each card, which is resizable vertically.</p></li></ul></section></article></div></section><section class="topic"><div><article class="article"><h1 class="main-title" id="-525274740">Map Component</h1><section><h2 id="-525274740#overview" data-toc="overview#Map-Component.md-overview">Overview</h2><p id="-525274740#enz61o_2"><span class="inline-code" id="-525274740#enz61o_3">MapComponent</span> is a React component that integrates with Mapbox to display a map with interactive features. It allows users to view markers and popups for specific locations, fetch geoJSON data, and interact with map elements.</p></section><section><h2 id="-525274740#imports" data-toc="imports#Map-Component.md-imports">Imports</h2><div class="detached code-block" id="-525274740#enz61o_4"><pre><code class="language-ts">import mapboxgl, { Map } from 'mapbox-gl'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import 'mapbox-gl/dist/mapbox-gl.css'
+import { FeatureProperties, GeoJSONResponse } from '../../assets/types'
+import { useDispatch, useSelector } from 'react-redux'
+import { setGeoJSON } from '../../store/slices/geojsonSlice'
+import { RootState } from '../../store'
+import HoverCard from './HoverCard'
+import { createRoot } from 'react-dom/client'
+import { setHotel } from '../../store/slices/hotelSlice.ts'
+import { setNewHotel } from '../../store/slices/newHotelSlice.ts'
+import NewHotel from '../Modal/NewHotel'</code></pre></div></section><section><h2 id="-525274740#constants" data-toc="constants#Map-Component.md-constants">Constants</h2><p id="-525274740#enz61o_5"><span class="inline-code" id="-525274740#enz61o_6">Access Token</span>: Token for Mapbox API. <span class="inline-code" id="-525274740#enz61o_7">Tile ID</span>: Mapbox tile ID. <span class="inline-code" id="-525274740#enz61o_8">Initial Coordinates</span>: Default coordinates for specific cities.</p><div class="detached code-block" id="-525274740#enz61o_9"><pre><code class="language-ts">const accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN'
+const tileID = 'YOUR_TILE_ID'
+
+const initialCoordinates = {
+    Muscat: [58.38, 23.58],
+    Dubai: [55.27, 25.2],
+    Tehran: [51.37, 35.74],
+}</code></pre></div></section><section><h2 id="-525274740#fetch-geojson-data" data-toc="fetch-geojson-data#Map-Component.md-fetch-geojson-data">Fetch GeoJSON Data</h2><p id="-525274740#enz61o_10">Fetches geoJSON data for a given coordinate.</p><div class="detached code-block" id="-525274740#enz61o_11"><pre><code class="language-ts">const fetchGeoJSON = async (center: [number, number]) =&gt; {
+    const radius = 100000000
+    const limit = 50
+    const query = await fetch(
+        `https://api.mapbox.com/v4/${tileID}/tilequery/${center[0]},${center[1]}.json?radius=${radius}&amp;limit=${limit}&amp;access_token=${accessToken}`,
+        { method: 'GET' }
+    )
+    return await query.json()
+}</code></pre></div></section><section><h2 id="-525274740#main-component" data-toc="main-component#Map-Component.md-main-component">Main Component</h2><div class="detached code-block" id="-525274740#enz61o_12"><pre><code class="language-ts">export default function MapComponent() {
+    const mapContainerRef = useRef&lt;HTMLDivElement | null&gt;(null)
+    const mapRef = useRef&lt;Map | null&gt;(null)
+    const [lng, setLng] = useState&lt;number&gt;(initialCoordinates.Muscat[0])
+    const [lat, setLat] = useState&lt;number&gt;(initialCoordinates.Muscat[1])
+    const [zoom, setZoom] = useState&lt;number&gt;(12)
+    const city = useSelector((state: RootState) =&gt; state.city.selectedCity)
+    const dispatch = useDispatch()
+
+    useEffect(() =&gt; {
+        if (city) {
+            const coordinates = initialCoordinates[city[0].name]
+            if (coordinates) {
+                setLng(coordinates[0])
+                setLat(coordinates[1])
+            }
+        }
+    }, [city])
+}</code></pre></div></section><section><h2 id="-525274740#fetch-and-display-geojson-data" data-toc="fetch-and-display-geojson-data#Map-Component.md-fetch-and-display-geojson-data">Fetch and Display GeoJSON Data</h2><p id="-525274740#enz61o_13">Fetches geoJSON data and updates the map.</p><div class="detached code-block" id="-525274740#enz61o_14"><pre><code class="language-ts">const handleGeoJSONFetch = useCallback(
+       async (center: [number, number]) =&gt; {
+           try {
+               const json: GeoJSONResponse = await fetchGeoJSON(center)
+               const geoJSON = {
+                   type: 'FeatureCollection',
+                   features: json.features.map((feature) =&gt; ({
+                       type: 'Feature',
+                       geometry: {
+                           type: 'Point',
+                           coordinates: feature.geometry.coordinates,
+                       },
+                       properties: feature.properties,
+                   })),
+               }
+
+               if (mapRef.current?.getSource('tilequery')) {
+                   mapRef.current.getSource('tilequery').setData(geoJSON)
+               }
+               dispatch(setGeoJSON(geoJSON))
+
+               geoJSON.features.forEach((feature) =&gt; {
+                   const coordinates = feature.geometry.coordinates
+                   const properties = feature.properties as FeatureProperties
+                   const el = document.createElement('div')
+                   el.className = 'marker'
+                   el.style.backgroundColor = 'white'
+                   el.style.border = '1px solid gray'
+                   el.style.padding = '5px'
+                   el.style.borderRadius = '5px'
+                   el.innerHTML = `$${properties.PRICE}`
+                   el.style.textAlign = 'center'
+                   el.style.width = '50px'
+
+                   new mapboxgl.Marker(el)
+                       .setLngLat(coordinates)
+                       .addTo(mapRef.current!)
+               })
+           } catch (error) {
+               console.error('Error fetching tile query results:', error)
+           }
+       },
+       [dispatch, city]
+   )</code></pre></div></section><section><h2 id="-525274740#add-tile-query-source-and-layer" data-toc="add-tile-query-source-and-layer#Map-Component.md-add-tile-query-source-and-layer">Add Tile Query Source and Layer</h2><p id="-525274740#enz61o_15">Configures the map to display the tile query layer.</p><div class="detached code-block" id="-525274740#enz61o_16"><pre><code class="language-ts">const addTileQuerySourceAndLayer = useCallback(() =&gt; {
+    if (!mapRef.current) return
+
+    mapRef.current.addSource('tilequery', {
+        type: 'geojson',
+        data: {
+            type: 'FeatureCollection',
+            features: [],
+        },
+    })
+
+    const popup = new mapboxgl.Popup()
+
+    mapRef.current.on('mouseenter', 'tilequery-points', (event) =&gt; {
+        const features = event.features
+        if (features &amp;&amp; features.length &gt; 0) {
+            mapRef.current!.getCanvas().style.cursor = 'pointer'
+            const coordinates = features[0].geometry.coordinates.slice()
+            const properties = features[0].properties as FeatureProperties
+            popup
+                .setLngLat(coordinates)
+                .setDOMContent(
+                    (() =&gt; {
+                        const container = document.createElement('div')
+                        const root = createRoot(container)
+                        root.render(
+                            &lt;HoverCard
+                                bedroom={properties.BEDROOMS}
+                                bathroom={properties.BATHROOMS}
+                                price={properties.PRICE}
+                            /&gt;
+                        )
+                        return container
+                    })()
+                )
+                .addTo(mapRef.current!)
+        }
+    })
+
+    mapRef.current.on('mouseleave', 'tilequery-points', () =&gt; {
+        mapRef.current!.getCanvas().style.cursor = ''
+        popup.remove()
+    })
+
+    mapRef.current.on('click', 'tilequery-points', (event) =&gt; {
+        const features = event.features
+        if (features &amp;&amp; features.length &gt; 0) {
+            const properties = features[0].properties as FeatureProperties
+            dispatch(setHotel(properties))
+        }
+    })
+}, [])</code></pre></div></section><section><h2 id="-525274740#initialize-map" data-toc="initialize-map#Map-Component.md-initialize-map">Initialize Map</h2><p id="-525274740#enz61o_17">Initializes the map and sets up event listeners.</p><div class="detached code-block" id="-525274740#enz61o_18"><pre><code class="language-ts">const initializeMap = useCallback(() =&gt; {
+    if (mapRef.current) return
+
+    mapRef.current = new mapboxgl.Map({
+        container: mapContainerRef.current!,
+        style: 'mapbox://styles/mapbox/streets-v12',
+        center: [lng, lat],
+        zoom: zoom,
+        accessToken,
+    })
+
+    mapRef.current.on('load', () =&gt; {
+        addTileQuerySourceAndLayer()
+        handleGeoJSONFetch([lng, lat])
+    })
+
+    mapRef.current.on('move', () =&gt; {
+        const { lng, lat } = mapRef.current!.getCenter()
+        setLng(Number(lng.toFixed(4)))
+        setLat(Number(lat.toFixed(4)))
+        setZoom(Number(mapRef.current!.getZoom().toFixed(2)))
+    })
+
+    mapRef.current!.on('style.load', () =&gt; {
+        mapRef.current!.on('dblclick', (e) =&gt; {
+            const coordinates = e.lngLat
+            dispatch(
+                setNewHotel({
+                    latitude: coordinates.lat,
+                    longitude: coordinates.lng,
+                    ADDRESS_LINE1: '',
+                    BATHROOMS: 0,
+                    BEDROOMS: 0,
+                    CITY: '',
+                    COUNTRY: '',
+                    GUESTS: 0,
+                    HOTEL_NAME: '',
+                    NBHD_NAME: '',
+                    PRICE: 100,
+                    RATING: 5,
+                    TYPE: '',
+                })
+            )
+        })
+    })
+}, [lng, lat, zoom, handleGeoJSONFetch, addTileQuerySourceAndLayer])</code></pre></div></section><section><h2 id="-525274740#effect-hooks" data-toc="effect-hooks#Map-Component.md-effect-hooks">Effect Hooks</h2><p id="-525274740#enz61o_19">Setup and update the map on component mount and city changes.</p><div class="detached code-block" id="-525274740#enz61o_20"><pre><code class="language-ts">useEffect(() =&gt; {
+    initializeMap()
+}, [initializeMap])
+
+useEffect(() =&gt; {
+    if (mapRef.current &amp;&amp; city) {
+        mapRef.current.setCenter([lng, lat])
+        handleGeoJSONFetch([lng, lat])
+    }
+}, [handleGeoJSONFetch, city])
+
+return (
+    &lt;div className=&quot;cy-map h-full overflow-hidden rounded-xl&quot;&gt;
+        &lt;div ref={mapContainerRef} className=&quot;h-full&quot; /&gt;
+        &lt;NewHotel /&gt;
+    &lt;/div&gt;
+)</code></pre></div></section></article></div></section></div></body></html>
