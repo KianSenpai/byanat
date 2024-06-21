@@ -7,6 +7,8 @@
                  start-page="starter-topic.md">
 
     <toc-element topic="starter-topic.md">
+        <toc-element topic="Search-Box-Component.md"/>
+        <toc-element topic="Widget-Container-Component.md"/>
         <toc-element topic="Map-Component.md"/>
     </toc-element>
 </instance-profile>

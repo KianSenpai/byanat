@@ -21,8 +21,8 @@ import NewHotel from '../Modal/NewHotel'
 ```
 
 # Constants
-`Access Token`: Token for Mapbox API.
-`Tile ID`: Mapbox tile ID.
+`Access Token`: Token for Mapbox API.\
+`Tile ID`: Mapbox tile ID.\
 `Initial Coordinates`: Default coordinates for specific cities.
 
 ```typescript
