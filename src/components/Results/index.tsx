@@ -20,7 +20,7 @@ export default function Results() {
     const itemTemplate = (hotel: Feature) => {
         return (
             <div
-                className="cursor-pointer"
+                className="w-full cursor-pointer"
                 onClick={() => handleClick(hotel.properties)}
             >
                 <HotelCard
@@ -38,13 +38,14 @@ export default function Results() {
     }
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex w-full flex-col gap-4">
             <span className="text-3xl font-extrabold">
                 Results in {city ? city[0].name : ''}
             </span>
             <FilterContainer onChange={(e) => setSelectedFilter(e)} />
             {geojson ? (
                 <DataScroller
+                    className="w-full"
                     value={geojson?.features
                         .filter((hotel) => {
                             if (!filter) return hotel
