@@ -10,7 +10,7 @@ import { useState } from 'react'
 export default function Results() {
     const [selectedFilter, setSelectedFilter] = useState('')
     const dispatch = useDispatch()
-    const geojson = useSelector((state: RootState) => state.geojson.geojson)
+    const geoJson = useSelector((state: RootState) => state.geojson.geojson)
     const filter = useSelector(
         (state: RootState) => state.filter.selectedFilter
     )
@@ -43,10 +43,10 @@ export default function Results() {
                 Results in {city ? city[0].name : ''}
             </span>
             <FilterContainer onChange={(e) => setSelectedFilter(e)} />
-            {geojson ? (
+            {geoJson ? (
                 <DataScroller
                     className="w-full"
-                    value={geojson?.features
+                    value={geoJson?.features
                         .filter((hotel) => {
                             if (!filter) return hotel
 
