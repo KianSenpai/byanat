@@ -9,177 +9,154 @@ import { Button } from 'primereact/button'
 import { FeatureProperties } from '../../../../assets/types'
 import { setNewHotel } from '../../../../store/slices/newHotelSlice'
 import { Toast } from 'primereact/toast'
+import { Checkbox } from 'primereact/checkbox'
 
 interface Item {
     id: number
     body: ReactNode
+    name: string
+}
+
+interface FormData {
+    name: string
+    area: string
+    address: string
+    guest: number
+    bedroom: number
+    bathroom: number
+    type: string
+    email: string
 }
 
 const types = [
-    {
-        name: 'Entire Studio Apartment',
-        code: 'Entire Studio Apartment',
-    },
+    { name: 'Entire Studio Apartment', code: 'Entire Studio Apartment' },
     { name: 'Entire Home', code: 'Entire Home' },
-    {
-        name: 'Share with Super Host',
-        code: 'Share with Super Host',
-    },
+    { name: 'Share with Super Host', code: 'Share with Super Host' },
 ]
 
-const validateEmail = (email: string) => {
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    return regex.test(email)
-}
+const validateEmail = (email: string) =>
+    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
 
 export default function FieldContainer() {
-    const toast = useRef(null)
-
+    const toast = useRef<Toast>(null)
+    const dispatch = useDispatch()
     const newHotel = useSelector((state: RootState) => state.newHotel.hotel)
 
-    const [name, setName] = useState(newHotel?.HOTEL_NAME || '')
-    const [area, setArea] = useState(newHotel?.NBHD_NAME || '')
-    const [address, setAddress] = useState(newHotel?.ADDRESS_LINE1 || '')
-    const [guest, setGuest] = useState(newHotel?.GUESTS || 0)
-    const [bedroom, setBedroom] = useState(newHotel?.BEDROOMS || 0)
-    const [bathroom, setBathroom] = useState(newHotel?.BATHROOMS || 0)
-    const [type, setType] = useState(newHotel?.TYPE || types[0].code)
-    const [email, setEmail] = useState('')
-
-    const dispatch = useDispatch()
+    const [fields, setFields] = useState<Item[]>([])
+    const [formData, setFormData] = useState<FormData>({
+        name: newHotel?.HOTEL_NAME || '',
+        area: newHotel?.NBHD_NAME || '',
+        address: newHotel?.ADDRESS_LINE1 || '',
+        guest: newHotel?.GUESTS || 0,
+        bedroom: newHotel?.BEDROOMS || 0,
+        bathroom: newHotel?.BATHROOMS || 0,
+        type: newHotel?.TYPE || types[0].code,
+        email: '',
+    })
 
     useEffect(() => {
         if (newHotel) {
-            setName(newHotel.HOTEL_NAME || '')
-            setArea(newHotel.NBHD_NAME || '')
-            setAddress(newHotel.ADDRESS_LINE1 || '')
-            setGuest(newHotel.GUESTS || 0)
-            setBedroom(newHotel.BEDROOMS || 0)
-            setBathroom(newHotel.BATHROOMS || 0)
-            setType(newHotel.TYPE || types[0].code)
+            setFormData({
+                name: newHotel.HOTEL_NAME || '',
+                area: newHotel.NBHD_NAME || '',
+                address: newHotel.ADDRESS_LINE1 || '',
+                guest: newHotel.GUESTS || 0,
+                bedroom: newHotel.BEDROOMS || 0,
+                bathroom: newHotel.BATHROOMS || 0,
+                type: newHotel.TYPE || types[0].code,
+                email: '',
+            })
         }
     }, [newHotel])
 
+    const handleInputChange = (field: keyof FormData, value: any) => {
+        setFormData((prev) => ({ ...prev, [field]: value }))
+    }
+
+    const renderInput = (
+        field: keyof FormData,
+        label: string,
+        isValid = true
+    ) => (
+        <div className="grid w-full grid-cols-2">
+            <span>{label}</span>
+            <InputText
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
+                value={formData[field]}
+                onChange={(e) => handleInputChange(field, e.target.value)}
+                className={`${isValid ? '' : 'border-red-500'} border`}
+            />
+        </div>
+    )
+
+    const renderNumberInput = (field: keyof FormData, label: string) => (
+        <div className="grid w-full grid-cols-2">
+            <span>{label}</span>
+            <InputNumber
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
+                value={formData[field]}
+                onValueChange={(e) => handleInputChange(field, e.value)}
+                min={0}
+                max={100}
+                className="border"
+            />
+        </div>
+    )
+
+    const renderDropdown = (field: keyof FormData, label: string) => (
+        <div className="grid w-full grid-cols-2">
+            <span>{label}</span>
+            <Dropdown
+                value={formData[field]}
+                onChange={(e) => handleInputChange(field, e.value)}
+                options={types}
+                optionLabel="name"
+                placeholder="Select a type"
+                className="border"
+            />
+        </div>
+    )
+
+    const renderCoordinate = () => (
+        <div className="grid w-full grid-cols-2">
+            <span>Coordinate</span>
+            <span>
+                {newHotel?.latitude}, {newHotel?.longitude}
+            </span>
+        </div>
+    )
+
     const initialCards: Item[] = [
-        {
-            id: 1,
-            body: (
-                <div className="grid w-full grid-cols-2">
-                    <span>Area</span>
-                    <InputText
-                        value={area}
-                        onChange={(e) => {
-                            setArea(e.target.value)
-                        }}
-                        className="border"
-                    />
-                </div>
-            ),
-        },
-        {
-            id: 2,
-            body: (
-                <div className="grid w-full grid-cols-2">
-                    <span>Address</span>
-                    <InputText
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                        className="border"
-                    />
-                </div>
-            ),
-        },
-        {
-            id: 3,
-            body: (
-                <div className="grid w-full grid-cols-2">
-                    <span>Guests</span>
-                    <InputNumber
-                        value={guest}
-                        onValueChange={(e) => setGuest(Number(e.value))}
-                        min={0}
-                        max={100}
-                        className="border"
-                    />
-                </div>
-            ),
-        },
+        { id: 1, name: 'Area', body: renderInput('area', 'Area') },
+        { id: 2, name: 'Address', body: renderInput('address', 'Address') },
+        { id: 3, name: 'Guests', body: renderNumberInput('guest', 'Guests') },
         {
             id: 4,
-            body: (
-                <div className="grid w-full grid-cols-2">
-                    <span>Bedrooms</span>
-                    <InputNumber
-                        value={bedroom}
-                        onValueChange={(e) => setBedroom(Number(e.value))}
-                        min={0}
-                        max={100}
-                        className="border"
-                    />
-                </div>
-            ),
+            name: 'Bedrooms',
+            body: renderNumberInput('bedroom', 'Bedrooms'),
         },
         {
             id: 5,
-            body: (
-                <div className="grid w-full grid-cols-2">
-                    <span>Bathrooms</span>
-                    <InputNumber
-                        value={bathroom}
-                        onValueChange={(e) => setBathroom(Number(e.value))}
-                        min={0}
-                        max={100}
-                        className="border"
-                    />
-                </div>
-            ),
+            name: 'Bathrooms',
+            body: renderNumberInput('bathroom', 'Bathrooms'),
         },
-        {
-            id: 6,
-            body: (
-                <div className="grid w-full grid-cols-2">
-                    <span>Type</span>
-                    <Dropdown
-                        value={type}
-                        onChange={(e) => setType(e.value)}
-                        options={types}
-                        optionLabel="name"
-                        placeholder="Select a type"
-                        className="border"
-                    />
-                </div>
-            ),
-        },
-        {
-            id: 7,
-            body: (
-                <div className="grid w-full grid-cols-2">
-                    <span>Coordinate</span>
-                    <span>
-                        {newHotel?.latitude}, {newHotel?.longitude}
-                    </span>
-                </div>
-            ),
-        },
+        { id: 6, name: 'Type', body: renderDropdown('type', 'Type') },
+        { id: 7, name: 'Coordinate', body: renderCoordinate() },
         {
             id: 8,
-            body: (
-                <div className="grid w-full grid-cols-2">
-                    <span>Email (Just to show I can validate)</span>
-                    <InputText
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className={`${validateEmail(email) ? '' : 'border-red-500'} border`}
-                    />
-                </div>
+            name: 'Email',
+            body: renderInput(
+                'email',
+                'Email (Just to show I can validate)',
+                validateEmail(formData.email)
             ),
         },
     ]
 
     const showWarn = () => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        toast.current.show({
+        toast.current?.show({
             severity: 'warn',
             summary: 'Warning',
             detail: 'All data are saved in redux, now we need an API to send data and recall the map API to get new data',
@@ -189,17 +166,17 @@ export default function FieldContainer() {
 
     const handleClick = () => {
         const hotelData: FeatureProperties = {
-            HOTEL_NAME: name.length ? name : 'default hotel',
-            NBHD_NAME: area.length ? area : 'default area',
-            ADDRESS_LINE1: address.length ? address : 'default address',
+            HOTEL_NAME: formData.name || 'default hotel',
+            NBHD_NAME: formData.area || 'default area',
+            ADDRESS_LINE1: formData.address || 'default address',
             PRICE: 1000,
             RATING: 5,
-            BATHROOMS: bathroom ? bathroom : 1,
-            BEDROOMS: bedroom ? bedroom : 1,
-            GUESTS: guest ? guest : 1,
+            BATHROOMS: formData.bathroom || 1,
+            BEDROOMS: formData.bedroom || 1,
+            GUESTS: formData.guest || 1,
             CITY: 'aaa',
             COUNTRY: 'aaa',
-            TYPE: type.length ? type : 'Entire Studio Apartment',
+            TYPE: formData.type || 'Entire Studio Apartment',
             latitude: newHotel?.latitude || 0,
             longitude: newHotel?.longitude || 0,
         }
@@ -208,23 +185,58 @@ export default function FieldContainer() {
         showWarn()
     }
 
-    const renderCard = useCallback((card: Item) => {
-        return (
+    const renderCard = useCallback(
+        (card: Item) => (
             <Pane
                 key={card.id}
-                className="w-full"
+                className="my-4 w-full"
                 resizable={{ x: false, y: false, xy: false }}
             >
                 {card.body}
             </Pane>
-        )
-    }, [])
+        ),
+        []
+    )
+
+    const onCategoryChange = (e: { checked: boolean; value: number }) => {
+        const selectedCards = e.checked
+            ? [...fields, initialCards.find((card) => card.id === e.value)!]
+            : fields.filter((f) => f.id !== e.value)
+        setFields(selectedCards)
+    }
 
     return (
         <div className="flex w-full flex-col justify-between md:w-2/3">
             <Toast ref={toast} />
-            <SortablePane direction="vertical" className="w-full" margin={16}>
-                {initialCards.map((card) => renderCard(card))}
+            <div className="flex flex-wrap gap-3">
+                {initialCards.map((card) => (
+                    <div key={card.id} className="flex items-center">
+                        <Checkbox
+                            inputId={card.name}
+                            name="category"
+                            value={card.id}
+                            onChange={(e) =>
+                                onCategoryChange({
+                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                    // @ts-expect-error
+                                    checked: e.checked,
+                                    value: card.id,
+                                })
+                            }
+                            checked={fields.some((item) => item.id === card.id)}
+                        />
+                        <label htmlFor={card.name} className="ml-2">
+                            {card.name}
+                        </label>
+                    </div>
+                ))}
+            </div>
+            <SortablePane
+                direction="vertical"
+                className="h-56 w-full"
+                margin={16}
+            >
+                {fields.map((card) => renderCard(card))}
             </SortablePane>
             <Button
                 label="confirm"
